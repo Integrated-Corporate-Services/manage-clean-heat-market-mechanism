@@ -1,0 +1,27 @@
+<div *ngIf="manufacturer$ | async; let manufacturer" class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Application rejected</h1>
+      <div class="govuk-panel__body">
+        Successfully rejected
+        <br />
+        <strong>{{ manufacturer.name }}</strong>
+      </div>
+    </div>
+    <br />
+    <h2 class="govuk-heading-m">What happens next?</h2>
+    <p class="govuk-body">
+      This application has been rejected and the account has been archived.
+      No notification has been sent.
+      You can still access the archived account on the manufacturers page.
+    </p>
+    <h2 class="govuk-heading-m">What would you like to do next?</h2>
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" [routerLink]="'/admin/organisations'">
+          Back to manufacturer accounts
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

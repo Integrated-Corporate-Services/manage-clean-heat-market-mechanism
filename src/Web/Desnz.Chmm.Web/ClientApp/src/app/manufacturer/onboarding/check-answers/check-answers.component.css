@@ -1,0 +1,14 @@
+.no-margin-bottom {
+  margin-bottom: 0px !important;
+}
+
+.sub-heading {
+  color: #787878 !important;
+  padding-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.archived-status {
+  vertical-align: top;
+  margin-top: 0.15rem;
+}

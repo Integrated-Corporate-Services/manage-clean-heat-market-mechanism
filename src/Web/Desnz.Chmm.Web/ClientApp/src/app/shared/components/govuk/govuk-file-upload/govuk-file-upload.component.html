@@ -1,0 +1,73 @@
+<div
+  class="govuk-form-group govuk-!-margin-bottom-6"
+  [class.govuk-form-group--error]="error"
+>
+  <label class="govuk-label" for="{{ id }}">
+    {{ label }}
+  </label>
+  <p *ngIf="error" id="file-error" class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span>
+    {{ error }}
+  </p>
+  <div *ngIf="hint" id="{{ id }}-hint" class="govuk-hint">
+    {{ hint }}
+  </div>
+  <input
+    class="govuk-file-upload"
+    [id]="id"
+    [name]="name"
+    type="file"
+    (change)="onFileChange($event)"
+    multiple
+  />
+  <div
+    *ngIf="retrievingFiles || uploadingFiles || deletingFile"
+    class="hods-loading-spinner"
+  >
+    <div
+      class="hods-loading-spinner__spinner"
+      aria-live="polite"
+      role="status"
+    ></div>
+    <div class="hods-loading-spinner__content">
+      <h1 *ngIf="uploadingFiles" class="govuk-heading-m">
+        Checking documents and scanning for viruses...
+      </h1>
+      <h1 *ngIf="retrievingFiles" class="govuk-heading-m">
+        Retrieving files...
+      </h1>
+      <h1 *ngIf="deletingFile" class="govuk-heading-m">Deleting file...</h1>
+    </div>
+  </div>
+  <ng-container *ngIf="!retrievingFiles && fileNames.length > 0">
+    <p
+      class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1 govuk-!-margin-top-2"
+    >
+      <b
+        >{{ fileNames.length }} file(s) were uploaded
+      </b>
+    </p>
+    <ul class="govuk-list">
+      <li *ngFor="let name of fileNames" class="file-upload-li">
+        <div class="govuk-grid-row">
+          <div
+            class="govuk-grid-column-three-quarters file-upload-uploaded-file-name"
+          >
+            <i class="govuk-body">{{ name }}</i>
+          </div>
+          <div
+            class="govuk-grid-column-one-quarter file-upload-uploaded-file-remove"
+          >
+            <a
+              class="govuk-link govuk-!-margin-0"
+              (click)="onRemoveFile(name)"
+              href="javascript:void(0)"
+            >
+              Remove
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+</div>

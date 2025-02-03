@@ -1,0 +1,84 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">Credit transfer contacts</h1>
+
+    <p class="govuk-body">
+      This page shows you the contact details of other manufacturers who have opted into sharing their contact details for the purpose of transferring credits.
+      If you want your details to appear on this page, contact the Administrator.
+    </p>
+  </div>
+</div>
+
+<div class="govuk-!-margin-1">&nbsp;</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <div class="accordion" *ngIf="accordion && accordion.sections.length > 0; else noContacts">
+      <div class="accordion-section" *ngFor="let section of accordion.sections">
+        <div class="accordion-section__heading">
+          <button (click)="toggle(section)">
+            <h2 class="govuk-heading-m">
+              {{ section.details.organisationName }}
+            </h2>
+            <span class="show-hide" *ngIf="section.show === true">
+              <svg class="caret-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="var(--ci-primary-color, currentColor)" d="M256,496A240,240,0,0,1,86.294,86.294,240,240,0,0,1,425.706,425.706,238.43,238.43,0,0,1,256,496Zm0-448C141.309,48,48,141.309,48,256s93.309,208,208,208,208-93.309,208-208S370.691,48,256,48Z" class="ci-primary" />
+                <polygon fill="var(--ci-primary-color, currentColor)" points="256 342.627 132.687 219.313 155.313 196.687 256 297.372 356.687 196.687 379.313 219.313 256 342.627" class="ci-primary" />
+              </svg>
+              <span class="show-hide-text-container">
+                <span>Hide</span>
+              </span>
+            </span>
+            <span class="show-hide" *ngIf="section.show === false">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="var(--ci-primary-color, currentColor)" d="M256,496A240,240,0,0,1,86.294,86.294,240,240,0,0,1,425.706,425.706,238.43,238.43,0,0,1,256,496Zm0-448C141.309,48,48,141.309,48,256s93.309,208,208,208,208-93.309,208-208S370.691,48,256,48Z" class="ci-primary" />
+                <polygon fill="var(--ci-primary-color, currentColor)" points="256 342.627 132.687 219.313 155.313 196.687 256 297.372 356.687 196.687 379.313 219.313 256 342.627" class="ci-primary" />
+              </svg>
+              <span class="show-hide-text-container">
+                <span>
+                  Show
+                </span>
+              </span>
+            </span>
+          </button>
+        </div>
+        <div class="accordion-section__body" *ngIf="section.show">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Contact name
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ section.details.contactName }}
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Telephone number
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ section.details.contactTelephone }}
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Email address
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ section.details.contactEmail }}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noContacts>
+      <div class="govuk-inset-text">
+        There are currently no credit transfer contacts to show.
+      </div>
+    </ng-template>
+
+  </div>
+</div>

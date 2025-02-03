@@ -1,0 +1,97 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">Transfer credits</h1>
+        </legend>
+        <div id="trasnfer-credits-hint" class="govuk-hint">
+          Use this page to choose the organisation you wish to transfer credits
+          to and how many to transfer.
+        </div>
+        <div
+          class="govuk-form-group"
+          [class.govuk-form-group--error]="errors['organisationId']"
+        >
+          <label class="govuk-label" for="organisation">Organisation</label>
+          <p
+            *ngIf="errors['organisationId']"
+            id="organisation-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["organisationId"] }}
+          </p>
+          <ng-container *ngIf="organisations$ | async; let organisations">
+            <p
+              *ngIf="organisations.loading; else showOrganisations"
+              class="govuk-body"
+            >
+              Loading organisations...
+            </p>
+            <ng-template #showOrganisations
+              ><select
+                formControlName="organisationId"
+                class="govuk-select govuk-!-width-three-quarters"
+                id="organisation"
+                name="organisation"
+                (ngModelChange)="
+                  onSelectOrganisation($event, organisations.data!)
+                "
+              >
+                <option
+                  *ngFor="let organisation of organisations?.data"
+                  [value]="organisation.id"
+                >
+                  {{ organisation.name }}
+                </option>
+              </select></ng-template
+            >
+          </ng-container>
+        </div>
+        <div
+          class="govuk-form-group"
+          [class.govuk-form-group--error]="errors['noOfCredits']"
+        >
+          <label class="govuk-label" for="noOfCredits">Number of credits</label>
+          <div id="noOfCredits-hint" class="govuk-hint">
+            Type a number of 0.5 or above.
+          </div>
+          <p
+            *ngIf="errors['noOfCredits']"
+            id="email-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["noOfCredits"] }}
+          </p>
+          <input
+            formControlName="noOfCredits"
+            class="govuk-input govuk-!-width-one-third"
+            id="noOfCredits"
+            name="noOfCredits"
+            type="text"
+            inputmode="numeric"
+            spellcheck="false"
+          />
+        </div>
+        <div class="govuk-button-group">
+          <button
+            class="govuk-button"
+            type="submit"
+            [disabled]="creditBalance === null"
+          >
+            Continue
+          </button>
+          <button
+            class="govuk-button govuk-button--secondary"
+            type="button"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

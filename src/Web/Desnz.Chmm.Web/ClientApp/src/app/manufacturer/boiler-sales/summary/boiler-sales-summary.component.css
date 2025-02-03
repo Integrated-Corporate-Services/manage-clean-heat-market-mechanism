@@ -1,0 +1,47 @@
+.govuk-summary-card .govuk-button {
+  margin-bottom: 0px !important;
+}
+
+.govuk-summary-card h2 {
+  margin-top: 0.65rem !important;
+}
+
+/*
+table tbody tr td:last-child,
+table thead tr th:last-child {
+  text-align: center;
+}
+*/
+
+.right-align {
+  text-align: right;
+}
+
+.govuk-summary-list__key {
+  width: 12rem;
+}
+
+.submit-quarter-card {
+  border: solid #b1b4b6 1px;
+  border-left: solid #b1b4b6 5px;
+  padding: 1rem 0rem 1.5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.submit-quarter-card a {
+  margin-bottom: 0px;
+}
+
+.link-restricted-size {
+  max-width: 20ch;
+  max-height: 1.18em;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 0.25rem;
+}
+
+.quarterly-file-cell {
+  max-width: 11rem;
+}

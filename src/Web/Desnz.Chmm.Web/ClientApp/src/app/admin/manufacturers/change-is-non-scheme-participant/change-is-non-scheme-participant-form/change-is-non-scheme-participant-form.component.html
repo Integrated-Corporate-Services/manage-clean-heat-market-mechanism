@@ -1,0 +1,65 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l">Change manufacturer type</h1>
+    <div class="govuk-hint">
+      By changing manufacturer type, you are changing whether or not they can receive credits from other manufacturers.
+      Only Scheme Participants can receive credits in the M-CHMM IT system.
+    </div>
+    <form>
+      <div class="govuk-form-group" [class.govuk-form-group--error]="error">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              Is this manufacturer a scheme participant?
+            </h1>
+          </legend>
+          <p *ngIf="error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ error }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                class="govuk-radios__input"
+                id="yes"
+                name="yes"
+                type="radio"
+                value="Yes"
+                [(ngModel)]="isSchemeParticipant"
+              />
+              <label class="govuk-label govuk-radios__label" for="yes">
+                Yes
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                class="govuk-radios__input"
+                id="no"
+                name="no"
+                type="radio"
+                value="No"
+                [(ngModel)]="isSchemeParticipant"
+              />
+              <label class="govuk-label govuk-radios__label" for="no">
+                No
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-button-group">
+        <button class="govuk-button" (click)="onContinue()" type="submit">
+          Continue
+        </button>
+        <button
+          class="govuk-button govuk-button--secondary"
+          routerLink="../edit/check-answers"
+          [queryParams]="{ fetchData: true, mode: 'edit' }"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

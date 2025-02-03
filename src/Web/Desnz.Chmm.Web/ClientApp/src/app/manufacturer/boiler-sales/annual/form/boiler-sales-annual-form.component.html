@@ -1,0 +1,138 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 *ngIf="mode === 'submit'" class="govuk-fieldset__heading">
+            Submit annual boiler sales for {{ year }}
+          </h1>
+          <h1 *ngIf="mode === 'edit'" class="govuk-fieldset__heading">
+            Edit annual boiler sales for {{ year }}
+          </h1>
+        </legend>
+        <ng-container *ngIf="mode === 'submit'">
+          <div class="govuk-!-margin-2">&nbsp;</div>
+          <div class="govuk-warning-text govuk-!-margin-bottom-2">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+              These numbers will be used for your final low-carbon heat target calculation.
+            </strong>
+          </div>
+          <div class="govuk-!-margin-2">&nbsp;</div>
+          <div class="govuk-hint">
+            Use this page to submit your annual boiler sales for {{ year }}.
+          </div>
+        </ng-container>
+        <ng-container *ngIf="mode === 'edit'">
+          <div class="govuk-hint">
+            Use this page to edit the boiler sales for {{ year }}.
+          </div>
+          <div class="govuk-!-margin-2">&nbsp;</div>
+        </ng-container>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <div
+              class="govuk-form-group"
+              [class.govuk-form-group--error]="errors['gas']"
+            >
+              <label class="govuk-label" for="gas"
+                >Number of gas boiler sales</label
+              >
+              <p
+                *ngIf="errors['gas']"
+                id="gas-error"
+                class="govuk-error-message"
+              >
+                <span class="govuk-visually-hidden">Error:</span>
+                {{ errors["gas"] }}
+              </p>
+              <div id="gas-hint" class="govuk-hint">
+                Type a number of 0 or above
+              </div>
+              <input
+                formControlName="gas"
+                class="govuk-input govuk-!-width-one-half"
+                id="gas"
+                name="gas"
+                type="text"
+                inputmode="numeric"
+                spellcheck="false"
+              />
+            </div>
+            <div
+              class="govuk-form-group"
+              [class.govuk-form-group--error]="errors['oil']"
+            >
+              <label class="govuk-label" for="oil"
+                >Number of oil boiler sales</label
+              >
+              <p
+                *ngIf="errors['oil']"
+                id="oil-error"
+                class="govuk-error-message"
+              >
+                <span class="govuk-visually-hidden">Error:</span>
+                {{ errors["oil"] }}
+              </p>
+              <div id="oil-hint" class="govuk-hint">
+                Type a number of 0 or above
+              </div>
+              <input
+                formControlName="oil"
+                class="govuk-input govuk-!-width-one-half"
+                id="oil"
+                name="oil"
+                type="text"
+                inputmode="numeric"
+                spellcheck="false"
+              />
+            </div>
+            <govuk-file-upload
+              *ngIf="verificationStatement$ | async; let verificationStatement"
+              id="verificationStatement"
+              name="verificationStatement"
+              label="Upload Verifier's assurance report"
+              [fileNames]="verificationStatement.fileNames"
+              [uploadingFiles]="verificationStatement.uploadingFiles"
+              [retrievingFiles]="verificationStatement.retrievingFiles"
+              [error]="errors['verificationStatement']"
+              (upload)="onVerificationStatementChange($event)"
+              (delete)="onDeleteVerificationStatement($event)"
+            ></govuk-file-upload>
+            <govuk-file-upload
+              *ngIf="supportingEvidence$ | async; let supportingEvidence"
+              id="supportingEvidence"
+              name="supportingEvidence"
+              label="Upload supporting evidence"
+              hint="Upload evidence to support your data using the recommended
+                template. See the scheme guidance for more information. Ensure
+                documents are clearly named."
+              [fileNames]="supportingEvidence.fileNames"
+              [uploadingFiles]="supportingEvidence.uploadingFiles"
+              [retrievingFiles]="supportingEvidence.retrievingFiles"
+              [error]="errors['supportingEvidence']"
+              (upload)="onSupportingEvidenceChange($event)"
+              (delete)="onDeleteSupportingEvidence($event)"
+            ></govuk-file-upload>
+          </div>
+        </div>
+      </fieldset>
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+        <button
+          type="button"
+          class="govuk-button govuk-button--secondary"
+          data-module="govuk-button"
+          routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+            organisationId
+          }}/boiler-sales"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

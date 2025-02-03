@@ -1,0 +1,24 @@
+N3wJ&5y65r98Cu - vaid until 10/08/2022
+
+pgdmin - oKiCDb!Y"\I/
+
+WC - $Jollyday09
+
+BusinessTypeID - any random
+	StatusID - any random
+	CountryId - should match DB
+	WebsiteURL - any random
+	TelephoneNumber - random < 11 digit
+	companiesHouseNumber - any random number
+	companiesHouseRegistrationDate - any past date
+	PccNumber - can be empty
+	VatRegistrationNumber - can be empty
+	AccountTypeID - random number
+	HMRCReferenceNumber - random number for any upload hmrc files
+	ValidFromDate - any past date
+	ValidToDate - can be null
+
+
+Bitbucket app pass - nf23N5ZvNtrNhxtne93D
+
+Y:\Dept\IT\Course Videos

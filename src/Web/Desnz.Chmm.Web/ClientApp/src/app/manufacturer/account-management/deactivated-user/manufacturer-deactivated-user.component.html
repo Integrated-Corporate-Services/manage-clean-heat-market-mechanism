@@ -1,0 +1,30 @@
+<ng-container *ngIf="user$ | async; let user">
+  <ng-container *ngIf="user.data">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        User deactivated
+      </h1>
+      <div class="govuk-panel__body">
+        {{ user.data.name }}'s account has been deactivated
+      </div>
+    </div>
+
+    <br />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">What happens now?</h2>
+        <p class="govuk-body">
+          This user has now been deactivated. They will no longer have access to the
+          <abbr title="Manage the Clean Heat Market Mechanism">M-CHMM</abbr> system.
+        </p>
+        <h2 class="govuk-heading-m">What would you like to do next?</h2>
+        <ul class="govuk-list">
+          <li *ngFor="let link of links">
+            <a class="govuk-link" [routerLink]="[link.route]">{{ link.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

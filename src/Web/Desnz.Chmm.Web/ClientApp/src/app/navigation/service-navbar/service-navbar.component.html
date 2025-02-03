@@ -1,0 +1,102 @@
+<div class="service-header" data-one-login-header-nav>
+  <div class="govuk-width-container">
+    <div class="service-header__container">
+      <span class="service-header__heading"> Clean Heat Market Mechanism </span>
+      <nav aria-label="Service primary navigation">
+        <ul
+          class="service-header__nav-list service-header__nav"
+          id="service-header__nav"
+          data-open-class="service-header__nav--open"
+        >
+          <ng-container *ngIf="showAdminLinks">
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="/admin"
+                class="service-header__nav-list-item-link"
+                (click)="onSelectLink()"
+              >
+                Administrators
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="/admin/organisations"
+                class="service-header__nav-list-item-link"
+                (click)="onSelectLink()"
+              >
+                Manufacturers
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="/admin/mcs-data"
+                class="service-header__nav-list-item-link"
+                (click)="onSelectLink()"
+              >
+                Heat pump data
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="/admin/scheme-year-configuration"
+                class="service-header__nav-list-item-link"
+                (click)="onSelectLink()"
+              >
+                Scheme parameters
+              </a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="showManufacturerLinks">
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/summary"
+                class="service-header__nav-list-item-link"
+              >
+                Summary
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/boiler-sales"
+                class="service-header__nav-list-item-link"
+              >
+                Boiler sales
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/heat-pumps"
+                class="service-header__nav-list-item-link"
+              >
+                Heat pumps
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="/organisation/{{ organisationId }}/users"
+                class="service-header__nav-list-item-link"
+              >
+                Users
+              </a>
+            </li>
+            <li class="service-header__nav-list-item">
+              <a
+                routerLink="/organisation/{{ organisationId }}/account"
+                [queryParams]="{ fetchData: true, mode: 'view' }"
+                class="service-header__nav-list-item-link"
+              >
+                Account
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

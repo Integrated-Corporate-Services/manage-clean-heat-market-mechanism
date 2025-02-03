@@ -1,0 +1,145 @@
+<div *ngIf="boilerSales$ | async; let boilerSales" class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <ng-container *ngIf="mode === 'submit'">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+        Check your {{ quarter }} {{ year }} boiler sales
+      </h1>
+      <div class="govuk-!-margin-2">&nbsp;</div>    
+      <div class="govuk-warning-text govuk-!-margin-bottom-6">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          You cannot amend this after submitting.
+        </strong>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="mode !== 'submit'">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+        Check the {{ quarter }} {{ year }} boiler sales
+      </h1>
+      <div class="govuk-!-margin-2">&nbsp;</div>   
+    </ng-container>
+    <h2 class="govuk-heading-m">Quarterly boiler sales</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Gas</dt>
+            <dd class="govuk-summary-list__value">
+              {{ boilerSales.gas | number : "" : "en-GB" }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/boiler-sales/quarter/{{ schemeYearQuarterId }}/{{ mode }}"
+                [queryParams]="{ returning: true }"
+              >
+                Change<span class="govuk-visually-hidden"> gas</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Oil</dt>
+            <dd class="govuk-summary-list__value">
+              {{ boilerSales.oil | number : "" : "en-GB" }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/boiler-sales/quarter/{{ schemeYearQuarterId }}/{{ mode }}"
+                [queryParams]="{ returning: true }"
+              >
+                Change<span class="govuk-visually-hidden"> oil</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-full">
+              Supporting evidence
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-three-quarters">
+              <ng-container
+                *ngFor="
+                  let file of boilerSales.supportingEvidence.fileNames;
+                  let last = last
+                "
+              >
+                <a
+                  download="{{ file }}"
+                  class="govuk-link"
+                  href="/api/boilersales/organisation/{{
+                    organisationId
+                  }}/year/{{ schemeYearId }}/quarter/{{
+                    schemeYearQuarterId
+                  }}/supporting-evidence/download?fileName={{ file }}"
+                  >{{ file }}</a
+                >
+                <br *ngIf="!last" />
+              </ng-container>
+            </dd>
+            <dd class="govuk-summary-list__actions govuk-!-width-one-quarter">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/boiler-sales/quarter/{{ schemeYearQuarterId }}/{{ mode }}"
+                [queryParams]="{ returning: true }"
+              >
+                Change<span class="govuk-visually-hidden">
+                  supporting evidence
+                </span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <div
+              class="govuk-form-group"
+              [class.govuk-form-group--error]="error"
+            >
+              <p
+                *ngIf="error"
+                id="confirmation-error"
+                class="govuk-error-message"
+              >
+                <span class="govuk-visually-hidden">Error:</span>
+                {{ error }}
+              </p>
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="confirmation"
+                  name="confirmation"
+                  type="checkbox"
+                  value="false"
+                  [(ngModel)]="hasConfirmed"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="confirmation"
+                >
+                  I confirm these details are true and correct to the best of my
+                  knowledge.
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-button-group">
+          <button
+            class="govuk-button"
+            [disabled]="boilerSales.loading"
+            (click)="onSubmit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

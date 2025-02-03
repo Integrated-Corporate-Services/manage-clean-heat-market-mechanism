@@ -1,0 +1,32 @@
+<ng-container *ngIf="schemeYearParameters$ | async; let schemeYearParameters">
+  <ng-container *ngIf="schemeYearParameters.loading; else show">
+    <p class="govuk-body">Loading scheme year summary...</p>
+  </ng-container>
+  <ng-template #show>
+    <ng-container *ngIf="schemeYearParameters.data && isAdmin !== null">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-5">
+            Scheme year summary
+            {{ schemeYearParameters.data.currentSchemeYear }}
+          </h1>
+        </div>
+      </div>
+      <obligation-calculation
+        [schemeYearId]="schemeYearId"
+        [organisationId]="organisationId"
+        [isAdmin]="isAdmin"
+        [schemeYearParameters]="schemeYearParameters.data"
+      ></obligation-calculation>
+      <br />
+      <br />
+      <credit-calculation
+        [organisationId]="organisationId"
+        [schemeYearId]="schemeYearId"
+        [isAdmin]="isAdmin"
+        [schemeYearParameters]="schemeYearParameters.data"
+      ></credit-calculation>
+    </ng-container>
+    <br />
+  </ng-template>
+</ng-container>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Api\Configuration\Desnz.Chmm.Configuration.Common\Desnz.Chmm.Configuration.Common.csproj" />
+    <ProjectReference Include="..\..\Api\Identity\Desnz.Chmm.Identity.Common\Desnz.Chmm.Identity.Common.csproj" />
+    <ProjectReference Include="..\Desnz.Chmm.ApiClients\Desnz.Chmm.ApiClients.csproj" />
+    <ProjectReference Include="..\Desnz.Chmm.Common\Desnz.Chmm.Common.csproj" />
+  </ItemGroup>
+
+</Project>

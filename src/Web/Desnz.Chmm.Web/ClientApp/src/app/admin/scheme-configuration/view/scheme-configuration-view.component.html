@@ -1,0 +1,28 @@
+<div class="govuk-grid-row" *ngIf="schemeYear$ | async; let schemeYear">
+  <div class="govuk-grid-column-full" *ngIf="schemeYear.data; let schemeYearData">
+    <h1 class="govuk-heading-l">
+      Scheme year {{ schemeYearData.name }}
+    </h1>
+    <div class="govuk-grid-row" *ngIf="schemeYearConfiguration$ | async; let schemeYearConfiguration">
+      <div class="govuk-grid-column-two-thirds" *ngIf="schemeYearConfiguration.data; let schemeYearConfigurationData">
+        <div class="govuk-summary-card">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title govuk-heading-m">
+              Scheme parameters
+            </h2>
+            <ul class="govuk-summary-card__actions" *ngIf="!schemeYearData.isReadOnly">
+              <li class="govuk-summary-card__action">
+                <a class="govuk-link" routerLink="../edit">
+                  Change<span class="govuk-visually-hidden"> scheme parameters</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="govuk-summary-card__content">
+            <scheme-configuration-view-display-properties [values]="schemeYearConfigurationData"></scheme-configuration-view-display-properties>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,708 @@
+<ng-container *ngIf="onboarding$ | async; let onboarding">
+  <div *ngIf="onboarding.errorMessage" class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li>
+                <a routerLink="#org-details">{{ onboarding.errorMessage }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <div class="govuk-grid-row">
+        <div *ngIf="onboarding.data; let data" class="govuk-grid-column-full">
+          <ng-container *ngIf="this.mode == 'submit'">
+            <h1 class="govuk-heading-l">
+              Check your answers before sending your application
+            </h1>
+          </ng-container>
+
+          <ng-container *ngIf="this.mode != 'submit'">
+            <ng-container *ngIf="!allowChange">
+              <h1 class="govuk-heading-l">View organisation account details</h1>
+            </ng-container>
+            <ng-container *ngIf="allowChange">
+              <h1 id="org-details" class="govuk-heading-l no-margin-bottom">
+                View organisation account details
+              </h1>
+              <h2
+                class="govuk-heading-m sub-heading"
+                *ngIf="data.responsibleUndertaking"
+              >
+                {{ data.responsibleUndertaking.name }}
+                &nbsp;
+                <strong *ngIf="data.status === 'Archived'" class="govuk-tag govuk-tag--default archived-status">Archived</strong>
+              </h2>
+            </ng-container>
+
+            <ng-container *ngIf="isAdmin && data.status !== 'Archived'">
+              <strong
+                class="govuk-tag govuk-!-margin-bottom-6 govuk-!-margin-right-3"
+                [class.govuk-tag--grey]="data.isNonSchemeParticipant"
+                [class.govuk-tag--blue]="!data.isNonSchemeParticipant"
+                [ngStyle]="{
+                  color: data.isNonSchemeParticipant ? '#0b0c0c' : '#1d70b8'
+                }"
+              >
+                {{
+                  data.isNonSchemeParticipant
+                    ? "NON-SCHEME PARTICIPANT"
+                    : "SCHEME PARTICIPANT"
+                }}</strong
+              >
+              <a
+                class="govuk-link"
+                (click)="onChangeIsSchemeParticipant()"
+                href="javascript:void(0)"
+                >Change</a
+              >
+            </ng-container>
+          </ng-container>
+
+          <view-administrator-approval
+            *ngIf="isAdmin && onboarding.data.status === 'Active'"
+            [organisationId]="organisationId"
+          ></view-administrator-approval>
+
+          <view-administrator-rejection
+            *ngIf="isAdmin && onboarding.data.status === 'Archived'"
+            [organisationId]="organisationId"
+          ></view-administrator-rejection>
+
+          <div
+            *ngIf="onboarding.data.status === 'Pending'"
+            class="govuk-warning-text"
+          >
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+              This organisation has submitted these details which require your
+              approval before the organisation becomes active.
+            </strong>
+          </div>
+
+          <div *ngIf="data.organisationStructure" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Organisation structure</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'organisation-structure'
+                          ]
+                        : '/organisation/register/organisation-structure'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      organisation structure
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Is this registration on behalf of a group of organisations?
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.organisationStructure.isOnBehalfOfGroup }}
+                  </dd>
+                </div>
+                <div
+                  *ngIf="data.organisationStructure.isOnBehalfOfGroup == 'Yes'"
+                  class="govuk-summary-list__row"
+                >
+                  <dt class="govuk-summary-list__key">
+                    Upload information about your relevant connected
+                    organisations
+                  </dt>
+                  <dd
+                    class="govuk-summary-list__value"
+                    *ngIf="mode === 'submit'"
+                  >
+                    <ng-container
+                      *ngFor="
+                        let file of data.organisationStructure.fileNames;
+                        let last = last
+                      "
+                    >
+                      {{ file }}<br *ngIf="!last" />
+                    </ng-container>
+                  </dd>
+                  <dd
+                    class="govuk-summary-list__value"
+                    *ngIf="mode !== 'submit'"
+                  >
+                    <ng-container
+                      *ngFor="
+                        let file of data.organisationStructure.fileNames;
+                        let last = last
+                      "
+                    >
+                      <a
+                        download="{{ file }}"
+                        class="govuk-link"
+                        href="/api/identity/organisations/{{
+                          organisationId
+                        }}/organisation-structure/download?fileName={{ file }}"
+                      >
+                        {{ file }} </a
+                      ><br *ngIf="!last" />
+                    </ng-container>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div *ngIf="data.responsibleUndertaking" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Organisation details</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'responsible-undertaking'
+                          ]
+                        : '/organisation/register/responsible-undertaking'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      organisation details
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Name of the organisation which is the Responsible
+                    Undertaking
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleUndertaking.name }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Does the Responsible Undertaking have a Companies House
+                    number?
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleUndertaking.hasCompaniesHouseNumber }}
+                  </dd>
+                </div>
+                <div
+                  *ngIf="data.responsibleUndertaking.companiesHouseNumber"
+                  class="govuk-summary-list__row"
+                >
+                  <dt class="govuk-summary-list__key">
+                    Companies House number
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleUndertaking.companiesHouseNumber }}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div *ngIf="data.address" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">
+                Registered office address
+              </h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'registered-office-address'
+                          ]
+                        : '/organisation/register/registered-office-address'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      registered office address
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Address line one</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.address.lineOne }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Address line two</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.address.lineTwo }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">City</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.address.city }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">County</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.address.county }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Postcode</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.address.postcode }}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div *ngIf="data.address" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">
+                Legal correspondence address
+              </h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'legal-correspondence-address'
+                          ]
+                        : '/organisation/register/legal-correspondence-address'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      legal correspondence address
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Which address should be used for legal correspondence?
+                  </dt>
+                  <ng-container
+                    [ngSwitch]="data.address.isUsedAsLegalCorrespondence"
+                  >
+                    <dd *ngSwitchCase="'Yes'" class="govuk-summary-list__value">
+                      Use the registered office address
+                    </dd>
+                    <dd *ngSwitchCase="'No'" class="govuk-summary-list__value">
+                      Use a different address
+                    </dd>
+                    <dd
+                      *ngSwitchCase="'IsNonSchemeParticipant'"
+                      class="govuk-summary-list__value"
+                    >
+                      I am not a scheme participant or near threshold supplier
+                    </dd>
+                  </ng-container>
+                </div>
+
+                <ng-container *ngIf="data.legalCorrespondenceAddress">
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Address line one</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.legalCorrespondenceAddress.lineOne }}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Address line two</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.legalCorrespondenceAddress.lineTwo }}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">City</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.legalCorrespondenceAddress.city }}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">County</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.legalCorrespondenceAddress.county }}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Postcode</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.legalCorrespondenceAddress.postcode }}
+                    </dd>
+                  </div>
+                </ng-container>
+              </dl>
+            </div>
+          </div>
+
+          <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Fossil fuel boilers</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'fossil-fuel-boilers'
+                          ]
+                        : '/organisation/register/fossil-fuel-boilers'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      fossil fuel boilers
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Do you sell relevant fossil fuel boilers?
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.isFossilFuelBoilerSeller }}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div *ngIf="data.heatPumps" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Heat pumps</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'heat-pump-brands'
+                          ]
+                        : '/organisation/register/heat-pump-brands'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden"> heat pumps</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Do you sell heat pumps?
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.heatPumps.isHeatPumpSeller }}
+                  </dd>
+                </div>
+                <div
+                  *ngIf="data.heatPumps.brands.length > 0"
+                  class="govuk-summary-list__row"
+                >
+                  <dt class="govuk-summary-list__key">Heat pump brands</dt>
+                  <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet heat-pump-brands">
+                      <li *ngFor="let brand of data.heatPumps.brands">
+                        {{ brand }}
+                      </li>
+                    </ul>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div *ngIf="data.applicant" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Applicant details</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'user-details'
+                          ]
+                        : '/organisation/register/user-details'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      applicant details
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Full name</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.applicant.fullName }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Job title</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.applicant.jobTitle }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Email address</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.applicant.emailAddress }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Telephone number</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.applicant.telephoneNumber }}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div
+            *ngIf="data.applicant && data.responsibleOfficer"
+            class="govuk-summary-card"
+          >
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">
+                Senior Responsible Officer details
+              </h2>
+              <!--
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a *ngIf="allowChange" class="govuk-link"
+                     [routerLink]="organisationId ? ['/organisation', organisationId, 'edit', 'responsible-officer-form'] : '/organisation/register/responsible-officer-form'"
+                     [queryParams]="{ mode: mode }">
+                    Change<span class="govuk-visually-hidden"> senior responsible officer details</span>
+                  </a>
+                </li>
+              </ul>
+              -->
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Is the applicant the Senior Responsible Officer for your
+                    organisation?
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.applicant.isResponsibleOfficer }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Full name</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleOfficer.fullName }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Job title</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleOfficer.jobTitle }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Email address</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleOfficer.emailAddress }}
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Telephone number</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.responsibleOfficer.telephoneNumber }}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div *ngIf="data.creditContactDetails" class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">
+                Opt in to be contacted for credit transfer
+              </h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a
+                    *ngIf="allowChange"
+                    class="govuk-link"
+                    [routerLink]="
+                      organisationId
+                        ? [
+                            '/organisation',
+                            organisationId,
+                            'edit',
+                            'contact-details'
+                          ]
+                        : '/organisation/register/contact-details'
+                    "
+                    [queryParams]="{ mode: mode }"
+                  >
+                    Change<span class="govuk-visually-hidden">
+                      contact details
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Would you like to opt-in to be contacted for credit
+                    transfers?
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ data.creditContactDetails.hasOptedIn }}
+                  </dd>
+                </div>
+                <ng-container
+                  *ngIf="data.creditContactDetails.hasOptedIn === 'Yes'"
+                >
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Full name</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.creditContactDetails.name }}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Email address</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.creditContactDetails.emailAddress }}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Telephone number</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ data.creditContactDetails.telephoneNumber }}
+                    </dd>
+                  </div>
+                </ng-container>
+              </dl>
+            </div>
+          </div>
+
+          <ng-container *ngIf="mode === 'submit'">
+            <h2 class="govuk-heading-m">Now submit your registration</h2>
+            <p class="govuk-body">
+              By submitting this registration for a Clean Heat Market Mechanism
+              account, you are confirming that these details are correct to the
+              best of your knowledge.
+            </p>
+          </ng-container>
+          <div class="govuk-button-group">
+            <button
+              *ngIf="mode === 'submit'"
+              class="govuk-button"
+              data-module="govuk-button"
+              [disabled]="onboarding.loading"
+              (click)="onSave()"
+            >
+              Accept and send
+            </button>
+            <ng-container *ngIf="onboarding.data.status === 'Pending'">
+              <button
+                class="govuk-button"
+                data-module="govuk-button"
+                [disabled]="onboarding.loading"
+                (click)="onApprove()"
+              >
+                Approve
+              </button>
+              <button
+                class="govuk-button govuk-button--warning"
+                data-module="govuk-button"
+                [disabled]="onboarding.loading"
+                (click)="onReject()"
+              >
+                Reject
+              </button>
+            </ng-container>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

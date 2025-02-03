@@ -1,0 +1,109 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 2 of 9</h1>
+    <h2 class="govuk-heading-l">Registered name of your organisation or of the Responsible Undertaking</h2>
+    <h3 class="govuk-heading-s">If you are a Scheme Participant or Near-threshold Supplier</h3>
+    <p class="govuk-body">
+      If you are a single organisation, enter your full organisation name.
+      If you are a group of organisations, enter the full name of the organisation which has been nominated to manage the Clean Heat Market Mechanism on behalf of the group – this is known as the ‘Responsible Undertaking’ (see the Scheme Guidance for more information).
+    </p>
+    <p class="govuk-body">
+      In both cases, if the organisation is registered on Companies House, you should use the name registered there.
+    </p>
+    <h3 class="govuk-heading-s">If you are not a Scheme Participant or Near-threshold Supplier</h3>
+    <p class="govuk-body">
+      You should enter your full organisation name. This is to allow the Scheme Administrator to check you are eligible for an M-CHMM account.
+      It does not mean the organisation will be a Responsible Undertaking or have a Clean Heat Market Mechanism low-carbon heat target.
+    </p>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['name']">
+        <label class="govuk-label govuk-!-font-size-24 govuk-!-font-weight-bold"
+               for="name">
+          Name of your organisation or of the Responsible Undertaking (see requirements above)
+        </label>
+        <p *ngIf="errors['name']" id="name-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["name"] }}
+        </p>
+        <input formControlName="name"
+               class="govuk-input"
+               id="name"
+               name="name"
+               type="text"
+               autocomplete="organization" />
+      </div>
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['hasCompaniesHouseNumber']">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              Will you provide your company number?
+            </h2>
+          </legend>
+          <div class="govuk-hint">
+            This is mandatory for Scheme Participants or Near-threshold Suppliers.
+          </div>
+          <p *ngIf="errors['hasCompaniesHouseNumber']"
+             id="hasCompaniesHouseNumber-error"
+             class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["hasCompaniesHouseNumber"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input formControlName="hasCompaniesHouseNumber"
+                     class="govuk-radios__input"
+                     id="yes"
+                     name="hasCompaniesHouseNumber"
+                     type="radio"
+                     value="Yes"
+                     data-aria-controls="conditional-yes" />
+              <label class="govuk-label govuk-radios__label" for="yes">Yes</label>
+            </div>
+            <div class="govuk-radios__conditional"
+                 [class.govuk-radios__conditional--hidden]="
+                form.controls.hasCompaniesHouseNumber.value !== 'Yes'
+              "
+                 id="conditional-yes">
+              <div class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['companiesHouseNumber']">
+                <label class="govuk-label" for="companiesHouseNumber">Company number</label>
+                <p *ngIf="errors['companiesHouseNumber']"
+                   id="companiesHouseNumber-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["companiesHouseNumber"] }}
+                </p>
+                <input formControlName="companiesHouseNumber"
+                       class="govuk-input govuk-input--width-10"
+                       id="companiesHouseNumber"
+                       name="companiesHouseNumber"
+                       type="text"
+                       autocomplete="off" />
+              </div>
+            </div>
+            <div class="govuk-radios__item">
+              <input formControlName="hasCompaniesHouseNumber"
+                     class="govuk-radios__input"
+                     id="no"
+                     name="hasCompaniesHouseNumber"
+                     type="radio"
+                     value="No"
+                     (ngModelChange)="onNoCompaniesHouseNo()" />
+              <label class="govuk-label govuk-radios__label" for="no">No</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="govuk-button-group">
+        <button type="submit"
+                class="govuk-button"
+                data-module="govuk-button"
+                [disabled]="loading$ | async">
+          Continue
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

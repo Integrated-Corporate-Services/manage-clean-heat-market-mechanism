@@ -1,0 +1,52 @@
+<div class="moj-timeline__description">
+  <ng-container *ngFor="let auditItemRow of auditItemRows; let last = last">
+    <ng-container *ngIf="auditItemRow.objectValue; else simpleValue">
+      <ng-container
+        *ngFor="let row of organisationDetailsRows; let last = last"
+      >
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <p class="govuk-body govuk-!-margin-bottom-2">{{ row.label }}</p>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <p class="govuk-body govuk-!-margin-bottom-2">
+              <ng-container *ngFor="let value of row.values; let last = last">
+                <ng-container *ngIf="value"
+                  >{{ value }}<br *ngIf="!last"
+                /></ng-container>
+              </ng-container>
+            </p>
+          </div>
+        </div>
+        <hr
+          class="govuk-section-break-m govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-2"
+        />
+      </ng-container>
+    </ng-container>
+
+    <ng-template #simpleValue>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <p class="govuk-body govuk-!-margin-bottom-2">
+            {{ auditItemRow.label }}
+          </p>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <pre
+            *ngIf="auditItemRow.simpleValue; else blank"
+            class="govuk-body govuk-!-margin-bottom-2 field-content"
+            [innerHTML]="auditItemRow.simpleValue"
+          ></pre>
+          <ng-template #blank>
+            <i class="govuk-body govuk-!-margin-bottom-2"
+              >This field was left blank</i
+            >
+          </ng-template>
+        </div>
+      </div>
+      <hr
+        class="govuk-section-break-m govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-2"
+      />
+    </ng-template>
+  </ng-container>
+</div>

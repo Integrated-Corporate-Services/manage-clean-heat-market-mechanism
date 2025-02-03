@@ -1,0 +1,105 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Confirm manufacturer account rejection
+            </h1>
+          </legend>
+          <div id="accountApproval-hint" class="govuk-hint">
+            By rejecting this application, this account will be archived and this manufacturer will not be granted access to the M-CHMM IT system.
+            You will still be able to access the archived application.
+          </div>
+          <div class="govuk-!-margin-1">&nbsp;</div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <govuk-file-upload
+                *ngIf="files$ | async; let files"
+                id="files"
+                name="files"
+                label="Upload files"
+                [fileNames]="files.fileNames"
+                [uploadingFiles]="files.uploadingFiles"
+                [retrievingFiles]="files.retrievingFiles"
+                [error]="files.error || errors['files']"
+                (upload)="onFilesChange($event)"
+                (delete)="onDeleteFile($event)"
+              ></govuk-file-upload>
+              <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="255">
+                <div class="govuk-form-group"
+                    [class.govuk-form-group--error]="errors['comments']">
+                  <label class="govuk-label" for="comments">
+                    Additional comments
+                  </label>
+                  <p *ngIf="errors['comments']"
+                    id="comments-error"
+                    class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span>
+                    {{ errors["comments"] }}
+                  </p>
+                  <textarea formControlName="comments"
+                            class="govuk-textarea govuk-js-character-count"
+                            id="comments"
+                            name="comments"
+                            rows="5"
+                            aria-describedby="comments-info"></textarea>
+                </div>
+                <div id="comments-info" class="govuk-hint govuk-character-count__message">
+                  You can enter up to 255 characters
+                </div>
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['confirmation']"
+              >
+                <p
+                  *ngIf="errors['confirmation']"
+                  id="confirmation-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["confirmation"] }}
+                </p>
+                <div class="govuk-checkboxes__item">
+                  <input
+                    formControlName="confirmation"
+                    class="govuk-checkboxes__input"
+                    id="confirmation"
+                    name="confirmation"
+                    type="checkbox"
+                    value="false"
+                  />
+                  <label
+                    class="govuk-label govuk-checkboxes__label govuk-!-padding-top-0"
+                    for="confirmation"
+                  >
+                    Please confirm you have conducted the necessary checks and can confirm this manufacturer is not eligible for an account.
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="govuk-button-group">
+        <button
+          type="submit"
+          class="govuk-button govuk-button--warning"
+          data-module="govuk-button"
+        >
+          Reject
+        </button>
+        <a
+          role="button"
+          class="govuk-button govuk-button--secondary"
+          data-module="govuk-button"
+          (click)="onCancel()"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

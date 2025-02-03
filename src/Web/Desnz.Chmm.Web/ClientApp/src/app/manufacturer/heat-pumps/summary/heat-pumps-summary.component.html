@@ -1,0 +1,74 @@
+<ng-container *ngIf="heatPumpInstallations$ | async; let heatPumpInstallations">
+    <ng-container *ngIf="heatPumpInstallations.loading; else page">
+      <p class="govuk-body">Loading heat pump installations...</p>
+    </ng-container>
+    <ng-template #page>
+        <h1 class="govuk-heading-l">
+            <span *ngIf="selectedSchemeYear$ | async; let selectedSchemeYear">
+                {{ selectedSchemeYear?.year }}
+            </span>
+            Heat pump installation summary
+        </h1>
+        <ng-container *ngIf="heatPumpInstallations.data && heatPumpInstallations.data.length > 0">
+            <h2 class="govuk-heading-m">Last updated on {{ heatPumpInstallations.data[0].endDate | date: 'dd MMM yyyy' }}</h2>
+        </ng-container>
+        <p class="govuk-body">
+            On this page you will find a summary of your heat pump installations via MCS for the scheme year.<br />
+            The information is broken down by installation type, whether hybrid or not and by timeframe.<br />
+            The MCS data is uploaded into the system every week.
+        </p>
+        <section>
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">Summary of all installations</caption>
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Heat pump type</th>
+                    <th scope="col" class="govuk-table__header">Installations generating a credit</th>
+                    <th scope="col" class="govuk-table__header">Credits generated</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="heatPumpInstallations.data" class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Standalone (1 credit)</th>
+                        <td class="govuk-table__cell">{{ heatPumpInstallations.data | sumHeatPumps:'installations':'non-hybrid' }}</td>
+                        <td class="govuk-table__cell">{{ heatPumpInstallations.data | sumHeatPumps:'credits':'non-hybrid' }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Hybrid (0.5 credit)</th>
+                        <td class="govuk-table__cell">{{ heatPumpInstallations.data | sumHeatPumps:'installations':'hybrid' }}</td>
+                        <td class="govuk-table__cell">{{ heatPumpInstallations.data | sumHeatPumps:'credits':'hybrid' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section *ngIf="heatPumpInstallations.data">
+            <h2 class="govuk-heading-m">Credit breakdown</h2>
+            <p class="govuk-body">
+                Below is the data which has come from the Micro-generational Certification Scheme (MCS) MCS Installation Database (MID) on which your credit allocation has been calculated.
+                If you have any questions, contact the Administrator via the CHMM Helpdesk at
+                <a class="govuk-link" href="mailto:chmm@environment-agency.gov.uk">chmm@environment-agency.gov.uk</a>.
+            </p>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Date range</th>
+                        <th scope="col" class="govuk-table__header">Standalone installation credits</th>
+                        <th scope="col" class="govuk-table__header">Hybrid installation credits</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="paginatedData$ | async; let paginatedData" class="govuk-table__body">
+                    <tr *ngFor="let heatPumpInstallation of paginatedData" class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            {{ heatPumpInstallation.startDate | date: 'dd MMM yyyy' }} &mdash; 
+                            {{ heatPumpInstallation.endDate | date: 'dd MMM yyyy' }}
+                        </td>
+                        <td class="govuk-table__cell">{{ heatPumpInstallation.heatPumpsGeneratedCredits }}</td>
+                        <td class="govuk-table__cell">{{ heatPumpInstallation.hybridHeatPumpsGeneratedCredits }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <govuk-pagination (onPageChange)="onPageChange($event)" [options]="{ pageSize: 10, data: heatPumpInstallations.data }"></govuk-pagination>
+        </section>
+    </ng-template>
+</ng-container>

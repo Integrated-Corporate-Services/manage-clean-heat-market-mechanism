@@ -1,0 +1,47 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">History</h1>
+    <p class="govuk-body">
+      This page shows you the history of activity which has happened on this
+      manufacturer account.
+    </p>
+    <ng-container *ngIf="historyState$ | async; let historyState">
+      <ng-container *ngIf="historyState.loading; else timeline">
+        <p class="govuk-body">Loading history ...</p>
+      </ng-container>
+      <ng-template #timeline>
+        <div class="moj-timeline">
+          <div
+            *ngFor="let auditItem of historyState.data"
+            class="moj-timeline__item"
+          >
+            <div class="moj-timeline__header">
+              <h2 class="moj-timeline__title govuk-!-font-size-24">
+                {{ translateEventName(auditItem.eventName) }}&nbsp;
+              </h2>
+
+              <p class="moj-timeline__byline">by {{ auditItem.createdBy }}</p>
+            </div>
+            <p class="moj-timeline__date">
+              <time dateTime="{{ auditItem.creationDate }}">{{ auditItem.creationDate | date: 'd MMM yyyy \'at\' h:mm a' }}</time>
+            </p>
+            <onboarding-audit-item-value
+              *ngIf="
+                auditItem.eventName === 'Edit Manufacturer' ||
+                  auditItem.eventName === 'Approve Manufacturer Application' ||
+                  auditItem.eventName === 'Onboard Manufacturer';
+                else regularEvent
+              "
+              [auditItemRows]="auditItem.auditItemRows"
+            ></onboarding-audit-item-value>
+
+            <ng-template #regularEvent>
+              <audit-item-value [auditItemRows]="auditItem.auditItemRows">
+              </audit-item-value>
+            </ng-template>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

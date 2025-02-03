@@ -1,0 +1,134 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 6 of 9</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['isHeatPumpSeller']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">Do you sell heat pumps?</h2>
+          </legend>
+          <div id="heatPumpBrands-hint" class="govuk-hint">
+            The Clean Heat Market Mechanism (CHMM) system will collect information about heat pump installations registered via the Microgeneration Certification Scheme Installation Database (MID) or other approved certification scheme.
+            This information will be used to generate credits for use in the CHMM scheme.
+            <br /><br />
+            You need to report your heat pump brands so they can be linked to your CHMM account, and you are awarded the correct number of credits.
+            Report all the heat pump brands under your organisation or group of organisations.
+            See the Scheme Guidance for more information.
+          </div>
+          <div class="govuk-!-margin-1">&nbsp;</div>
+          <p
+            *ngIf="errors['isHeatPumpSeller']"
+            id="isHeatPumpSeller-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["isHeatPumpSeller"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isHeatPumpSeller"
+                class="govuk-radios__input"
+                id="no"
+                name="isHeatPumpSeller"
+                type="radio"
+                value="No"
+                (ngModelChange)="onNoHeatPumps($event)"
+              />
+              <label class="govuk-label govuk-radios__label" for="no"
+                >I do not sell heat pumps</label
+              >
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isHeatPumpSeller"
+                class="govuk-radios__input"
+                id="yes"
+                name="isHeatPumpSeller"
+                type="radio"
+                value="Yes"
+                data-aria-controls="conditional-yes"
+                (ngModelChange)="onNoHeatPumps($event)"
+              />
+              <label class="govuk-label govuk-radios__label" for="yes"
+                >I do sell heat pumps
+              </label>
+            </div>
+            <div
+              class="govuk-radios__conditional govuk-radios__conditional--hidden"
+              [class.govuk-radios__conditional--hidden]="
+                form.controls.isHeatPumpSeller.value !== 'Yes'
+              "
+              id="conditional-yes"
+            >
+              <div
+                *ngFor="
+                  let heatPumpBrandForm of heatPumps.controls;
+                  let idx = index;
+                  let first = first
+                "
+                [formGroup]="heatPumpBrandForm"
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['heatPumpBrand' + idx]"
+              >
+                <label class="govuk-label" for="heatPumpBrand{{ idx }}"
+                  >Heat pump brand</label
+                >
+                <p
+                  *ngIf="errors['heatPumpBrand' + idx]"
+                  id="heatPumpBrand{{ idx }}-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["heatPumpBrand" + idx] }}
+                </p>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-three-quarters">
+                    <input
+                      formControlName="heatPumpBrand"
+                      class="govuk-input"
+                      id="heatPumpBrand{{ idx }}"
+                      name="heatPumpBrand{{ idx }}"
+                      type="text"
+                      autocomplete="on"
+                    />
+                  </div>
+                  <div class="govuk-grid-column-one-quarter">
+                    <button
+                      type="button"
+                      class="govuk-button govuk-button--secondary govuk-!-margin-0"
+                      data-module="govuk-button"
+                      (click)="onRemoveHeatPumpBrand(idx)"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-!-margin-1"></div>
+              <button
+                type="button"
+                class="govuk-button govuk-button--secondary govuk-!-margin-0"
+                data-module="govuk-button"
+                (click)="onAddHeatPumpBrand()"
+              >
+                Add another
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        [disabled]="loading$ | async"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

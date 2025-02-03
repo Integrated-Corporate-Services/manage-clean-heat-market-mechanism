@@ -1,0 +1,47 @@
+.total {
+  background-color: #1d70b8;
+  margin: 0;
+}
+
+.total .govuk-heading-m {
+  color: #ffffff;
+  margin: 0;
+  padding: 15px 5px 15px 5px;
+}
+
+.total .total-value {
+  text-align: right;
+}
+
+td:last-child {
+  text-align: right;
+}
+
+caption.govuk-table__caption {
+  display: inline;
+}
+
+button.caption-button {
+  font-size: 1.15rem;
+  padding: 0.2em 0.35em;
+  margin-bottom: 5px;
+}
+
+.credits-heading {
+  display: inline-block;
+  margin-top: -3px;
+  font-size: 1.9rem;
+}
+
+.credits-heading-container {
+  margin-top: 1rem;
+}
+
+.transfer-inset {
+  margin-top: 0px;
+}
+
+.transfer-inset button {
+  display: block;
+  margin-top: 0.8rem;
+}

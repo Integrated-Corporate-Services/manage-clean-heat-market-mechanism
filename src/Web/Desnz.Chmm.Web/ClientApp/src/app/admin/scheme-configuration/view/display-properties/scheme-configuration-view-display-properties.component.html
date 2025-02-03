@@ -1,0 +1,91 @@
+<h3 class="govuk-heading-s">Target</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Gas &amp; oil boiler target
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.targetRate | number : "" : "en-GB" }}%
+    </dd>
+  </div>
+</dl>
+
+<hr />
+
+<h3 class="govuk-heading-s">Thresholds</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Gas boiler threshold
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.gasBoilerSalesThreshold | number : "" : "en-GB" }}
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Oil boiler threshold
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.oilBoilerSalesThreshold | number : "" : "en-GB" }}
+    </dd>
+  </div>
+</dl>
+
+<hr />
+
+<h3 class="govuk-heading-s">Target carry forward</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Low-carbon heat target carry forward percentage
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.percentageCap | number : "" : "en-GB" }}%
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Low-carbon heat target carry forward multiplier
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.targetMultiplier | number : "" : "en-GB" }}
+    </dd>
+  </div>
+</dl>
+
+<hr />
+
+<h3 class="govuk-heading-s">Credit carry over</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Credit carry over percentage
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.creditCarryOverPercentage | number : "" : "en-GB" }}%
+    </dd>
+  </div>
+</dl>
+
+<hr />
+
+<h3 class="govuk-heading-s">Heatpump credit weighting</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Renewable weighting
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.alternativeRenewableSystemFuelTypeWeightingValue | number : "" : "en-GB" }}
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Fossil fuel weighting
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ values.alternativeFossilFuelSystemFuelTypeWeightingValue | number : "" : "en-GB" }}
+    </dd>
+  </div>
+</dl>

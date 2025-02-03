@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d996cad2-960a-4554-b4a3-6faed4bed9e3</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.5.0" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.400.70" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Content Update="wwwroot\**\*;">
+		<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	</Content>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\stores\administration\**" />
+    <Compile Remove="ClientApp\src\app\stores\dummy\**" />
+    <Compile Remove="ClientApp\src\app\stores\identity\**" />
+    <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\stores\administration\**" />
+    <Content Remove="ClientApp\src\app\stores\dummy\**" />
+    <Content Remove="ClientApp\src\app\stores\identity\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\stores\administration\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\stores\dummy\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\stores\identity\**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\stores\administration\**" />
+    <None Remove="ClientApp\src\app\stores\dummy\**" />
+    <None Remove="ClientApp\src\app\stores\identity\**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\admin\scheme-configuration\edit\check-answers\scheme-configuration-edit-check-answers.component.ts" />
+    <None Remove="ClientApp\src\app\admin\scheme-configuration\edit\confirmation\scheme-configuration-edit-confirmation.component.ts" />
+    <None Remove="ClientApp\src\app\admin\scheme-configuration\edit\confirmation\scheme-configuration-end-date.filter.ts" />
+    <None Remove="ClientApp\src\app\admin\scheme-configuration\edit\form\scheme-configuration-edit-form.component.ts" />
+    <None Remove="ClientApp\src\app\admin\scheme-configuration\view\display-properties\scheme-configuration-view-display-properties.component.ts" />
+    <None Remove="ClientApp\src\app\admin\scheme-configuration\view\scheme-configuration-view.component.ts" />
+    <None Remove="ClientApp\src\app\manufacturer\account-management\styles.ts" />
+    <None Remove="ClientApp\src\app\navigation\back-link\back-link.component.ts" />
+    <None Remove="ClientApp\src\app\navigation\back-link\back-link.provider.ts" />
+    <None Remove="ClientApp\src\app\shared\validation.ts" />
+    <None Remove="ClientApp\src\app\stores\account-management\commands\add-manufacturer-note-command.ts" />
+    <None Remove="ClientApp\src\app\stores\account-management\commands\edit-manufacturer-user-command.ts" />
+    <None Remove="ClientApp\src\app\stores\account-management\commands\invite-manufacturer-user-command.ts" />
+    <None Remove="ClientApp\src\app\stores\account-management\dtos\manufacturer-note.ts" />
+    <None Remove="ClientApp\src\app\stores\boiler-sales\dtos\annual-boiler-sales.ts" />
+    <None Remove="ClientApp\src\app\stores\boiler-sales\dtos\boiler-sales-overall-summary.ts" />
+    <None Remove="ClientApp\src\app\stores\boiler-sales\dtos\boiler-sales-summary.ts" />
+    <None Remove="ClientApp\src\app\stores\boiler-sales\dtos\quarterly-boiler-sales.ts" />
+    <None Remove="ClientApp\src\app\stores\credit\commands\amend-credit-command.ts" />
+    <None Remove="ClientApp\src\app\stores\credit\dtos\transaction-summary.dto.ts" />
+    <None Remove="ClientApp\src\app\stores\credit\dtos\transfer-history.dto.ts" />
+    <None Remove="ClientApp\src\app\stores\obligation\dtos\obligation-calculation-summary-dto.ts" />
+    <None Remove="ClientApp\src\app\stores\scheme-year-configuration\commands\update-scheme-year-configuration.command.ts" />
+    <None Remove="ClientApp\src\app\stores\scheme-year-configuration\dtos\scheme-year-configuration.dto.ts" />
+    <None Remove="ClientApp\src\app\stores\scheme-year-configuration\dtos\scheme-year.dto.ts" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Desnz.Chmm.Common\Desnz.Chmm.Common.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Desnz.Chmm.ApiClients\Desnz.Chmm.ApiClients.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\scheme-configuration\edit\check-answers\scheme-configuration-edit-check-answers.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\scheme-configuration\edit\confirmation\scheme-configuration-edit-confirmation.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\scheme-configuration\edit\confirmation\scheme-configuration-end-date.filter.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\scheme-configuration\edit\form\scheme-configuration-edit-form.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\scheme-configuration\view\display-properties\scheme-configuration-view-display-properties.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\scheme-configuration\view\scheme-configuration-view.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\manufacturer\account-management\styles.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\navigation\back-link\back-link.provider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\navigation\back-link\back-link.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\manufacturers\amend-credit\amend-credit-form\balance.validator.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\validation.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\account-management\commands\add-manufacturer-note-command.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\account-management\commands\edit-manufacturer-user-command.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\account-management\commands\invite-manufacturer-user-command.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\account-management\dtos\manufacturer-note.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\boiler-sales\dtos\annual-boiler-sales.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\boiler-sales\dtos\boiler-sales-overall-summary.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\boiler-sales\dtos\boiler-sales-summary.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\boiler-sales\dtos\quarterly-boiler-sales.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\credit\commands\amend-credit-command.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\credit\dtos\transfer-history.dto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\credit\dtos\transaction-summary.dto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\obligation\dtos\obligation-calculation-summary-dto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\stores\scheme-year-configuration\commands\update-scheme-year-configuration.command.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\stores\scheme-year-configuration\dtos\scheme-year-configuration.dto.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\stores\scheme-year-configuration\dtos\scheme-year.dto.ts" />
+  </ItemGroup>
+</Project>

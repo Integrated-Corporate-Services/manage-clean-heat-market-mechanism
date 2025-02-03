@@ -1,0 +1,21 @@
+﻿@page "/"
+@namespace Desnz.Chmm.Web.Pages
+@using System.Net;
+@using Desnz.Chmm.Web.Constants
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+
+    var source = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{@"/wwwroot/index.html"}");
+
+    if (HttpContext.Items.TryGetValue(GoogleAnalyticsConstants.HttpContextItemsKey.GoogleAnalyticsKey, out var googleAnalyticsKey) && googleAnalyticsKey != null)
+    {
+        source = source.Replace(GoogleAnalyticsConstants.Placeholder, googleAnalyticsKey.ToString());
+    }
+
+    if (HttpContext.Items.TryGetValue(SecurityHeadersConstants.HttpContextItemsKey.NONCE, out var nonce) && nonce != null)
+    {
+        source = source.Replace(SecurityHeadersConstants.Placeholder, nonce.ToString());
+    }    
+}
+@Html.Raw(source)

@@ -1,0 +1,45 @@
+<h2 class="govuk-heading-m">Check the user details before adding the user</h2>
+<h3 class="govuk-heading-s">Account details</h3>
+<div *ngIf="user$ | async; let user" class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <dl *ngIf="user.data; let user" class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Full name</dt>
+        <dd class="govuk-summary-list__value">
+          {{ user.name }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-link"
+            [routerLink]="
+              edit === 'true'
+                ? '/admin/users/edit/{{ user.id }}'
+                : '/admin/users/invite'
+            "
+          >
+            Change<span class="govuk-visually-hidden"> full name</span>
+          </a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Email address</dt>
+        <dd class="govuk-summary-list__value">
+          {{ user.email }}
+        </dd>
+        <dd *ngIf="edit === 'false'" class="govuk-summary-list__actions">
+          <a class="govuk-link" routerLink="/admin/users/invite">
+            Change<span class="govuk-visually-hidden"> email address</span>
+          </a>
+        </dd>
+      </div>
+    </dl>
+    <div class="govuk-button-group">
+      <button *ngIf="edit == 'false'" class="govuk-button" (click)="onSave()" [disabled]="user.loading">
+        Add user
+      </button>
+      <button *ngIf="edit == 'true'" class="govuk-button" (click)="onSave()" [disabled]="user.loading">
+        Edit user
+      </button>
+    </div>
+  </div>
+</div>

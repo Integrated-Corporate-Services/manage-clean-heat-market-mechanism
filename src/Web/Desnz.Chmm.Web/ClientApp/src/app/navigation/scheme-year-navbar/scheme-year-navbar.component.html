@@ -1,0 +1,25 @@
+<div
+  class="service-header"
+  [class.scheme-year-navbar-border]="!isAdmin"
+  data-one-login-header-nav
+>
+  <div class="govuk-width-container">
+    <div class="service-header__container">
+      <span class="service-header__heading">
+        <ng-container *ngIf="organisationName && isAdmin">
+          Viewing <b>{{ organisationName }}</b
+          >, for scheme year <b>{{ schemeYear }}</b>
+        </ng-container>
+        <ng-container *ngIf="!isAdmin">
+          You are viewing scheme year <b>{{ schemeYear }}</b>
+        </ng-container>
+        <a
+          class="govuk-link"
+          href="javascript:void(0)"
+          (click)="onChangeSchemeYear()"
+          >Change scheme year</a
+        >
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row" *ngFor="let row of state.rows">
+    <dt class="govuk-summary-list__key">
+      {{ row.title }}
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ row.value }}
+    </dd>
+    <dd *ngIf="row.link" class="govuk-summary-list__actions">
+      <a class="govuk-link" (click)="change(row)">
+        Change<span class="govuk-visually-hidden"> {{ row.title }}</span>
+      </a>
+    </dd>
+  </div>
+</dl>

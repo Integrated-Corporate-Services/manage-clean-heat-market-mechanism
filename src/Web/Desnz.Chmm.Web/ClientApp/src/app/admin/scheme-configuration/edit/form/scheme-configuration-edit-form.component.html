@@ -1,0 +1,198 @@
+<div class="govuk-grid-row" *ngIf="schemeYear$ | async; let schemeYear">
+  <div class="govuk-grid-column-full" *ngIf="schemeYear.data; let schemeYearData">
+    <h1 class="govuk-heading-l">
+      Change parameters for scheme year {{ schemeYearData.name }}
+    </h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h2 class="govuk-heading-m">Target</h2>
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['targetRate']">
+            <label class="govuk-label" for="targetRate">Gas &amp; oil boiler target</label>
+            <p *ngIf="errors['targetRate']"
+               id="targetRate-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["targetRate"] }}
+            </p>
+            <div id="targetRate-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <div class="govuk-input__wrapper">
+              <input formControlName="targetRate"
+                     class="govuk-input govuk-input--width-5"
+                     id="targetRate"
+                     name="targetRate"
+                     type="text"
+                     inputmode="numeric"
+                     spellcheck="false" />
+              <div class="govuk-input__suffix" aria-hidden="true">%</div>
+            </div>
+          </div>
+
+          <h2 class="govuk-heading-m">Thresholds</h2>
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['gasBoilerSalesThreshold']">
+            <label class="govuk-label" for="gasBoilerSalesThreshold">Gas boiler threshold</label>
+            <p *ngIf="errors['gasBoilerSalesThreshold']"
+               id="gasBoilerSalesThreshold-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["gasBoilerSalesThreshold"] }}
+            </p>
+            <div id="gasBoilerSalesThreshold-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <input formControlName="gasBoilerSalesThreshold"
+                   class="govuk-input govuk-input--width-5"
+                   id="gasBoilerSalesThreshold"
+                   name="gasBoilerSalesThreshold"
+                   type="text"
+                   inputmode="numeric"
+                   spellcheck="false" />
+          </div>
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['oilBoilerSalesThreshold']">
+            <label class="govuk-label" for="oilBoilerSalesThreshold">Oil boiler threshold</label>
+            <p *ngIf="errors['oilBoilerSalesThreshold']"
+               id="oilBoilerSalesThreshold-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["oilBoilerSalesThreshold"] }}
+            </p>
+            <div id="oilBoilerSalesThreshold-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <input formControlName="oilBoilerSalesThreshold"
+                   class="govuk-input govuk-input--width-5"
+                   id="oilBoilerSalesThreshold"
+                   name="oilBoilerSalesThreshold"
+                   type="text"
+                   inputmode="numeric"
+                   spellcheck="false" />
+          </div>
+
+          <h2 class="govuk-heading-m">Target carry forward</h2>
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['percentageCap']">
+            <label class="govuk-label" for="percentageCap">Low-carbon heat target carry forward percentage</label>
+            <p *ngIf="errors['percentageCap']"
+               id="percentageCap-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["percentageCap"] }}
+            </p>
+            <div id="percentageCap-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <div class="govuk-input__wrapper">
+              <input formControlName="percentageCap"
+                     class="govuk-input govuk-input--width-5"
+                     id="percentageCap"
+                     name="percentageCap"
+                     type="text"
+                     inputmode="numeric"
+                     spellcheck="false" />
+              <div class="govuk-input__suffix" aria-hidden="true">%</div>
+            </div>
+          </div>
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['targetMultiplier']">
+            <label class="govuk-label" for="targetMultiplier">Low-carbon heat target carry forward multiplier</label>
+            <p *ngIf="errors['targetMultiplier']"
+               id="targetMultiplier-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["targetMultiplier"] }}
+            </p>
+            <div id="targetMultiplier-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <input formControlName="targetMultiplier"
+                   class="govuk-input govuk-input--width-5"
+                   id="targetMultiplier"
+                   name="targetMultiplier"
+                   type="text"
+                   inputmode="numeric"
+                   spellcheck="false" />
+          </div>
+
+          <h2 class="govuk-heading-m">Credit carry over</h2>
+
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['creditCarryOverPercentage']">
+            <label class="govuk-label" for="creditCarryOverPercentage">Credit carry over percentage</label>
+            <p *ngIf="errors['creditCarryOverPercentage']"
+               id="creditCarryOverPercentage-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["creditCarryOverPercentage"] }}
+            </p>
+            <div id="creditCarryOverPercentage-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <div class="govuk-input__wrapper">
+              <input formControlName="creditCarryOverPercentage"
+                     class="govuk-input govuk-input--width-5"
+                     id="creditCarryOverPercentage"
+                     name="creditCarryOverPercentage"
+                     type="text"
+                     inputmode="numeric"
+                     spellcheck="false" />
+              <div class="govuk-input__suffix" aria-hidden="true">%</div>
+            </div>
+          </div>
+
+          <h2 class="govuk-heading-m">Heatpump credit weighting</h2>
+
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['alternativeRenewableSystemFuelTypeWeightingValue']">
+            <label class="govuk-label" for="alternativeRenewableSystemFuelTypeWeightingValue">Renewable weighting</label>
+            <p *ngIf="errors['alternativeRenewableSystemFuelTypeWeightingValue']"
+               id="alternativeRenewableSystemFuelTypeWeightingValue-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["alternativeRenewableSystemFuelTypeWeightingValue"] }}
+            </p>
+            <div id="alternativeRenewableSystemFuelTypeWeightingValue-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <input formControlName="alternativeRenewableSystemFuelTypeWeightingValue"
+                    class="govuk-input govuk-input--width-5"
+                    id="alternativeRenewableSystemFuelTypeWeightingValue"
+                    name="alternativeRenewableSystemFuelTypeWeightingValue"
+                    type="text"
+                    inputmode="numeric"
+                    spellcheck="false" />
+          </div>
+          <div class="govuk-form-group"
+               [class.govuk-form-group--error]="errors['alternativeFossilFuelSystemFuelTypeWeightingValue']">
+            <label class="govuk-label" for="alternativeFossilFuelSystemFuelTypeWeightingValue">Fossil fuel weighting</label>
+            <p *ngIf="errors['alternativeFossilFuelSystemFuelTypeWeightingValue']"
+               id="alternativeFossilFuelSystemFuelTypeWeightingValue-error"
+               class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["alternativeFossilFuelSystemFuelTypeWeightingValue"] }}
+            </p>
+            <div id="alternativeFossilFuelSystemFuelTypeWeightingValue-hint" class="govuk-hint">
+              Type a number of zero or above
+            </div>
+            <input formControlName="alternativeFossilFuelSystemFuelTypeWeightingValue"
+                    class="govuk-input govuk-input--width-5"
+                    id="alternativeFossilFuelSystemFuelTypeWeightingValue"
+                    name="alternativeFossilFuelSystemFuelTypeWeightingValue"
+                    type="text"
+                    inputmode="numeric"
+                    spellcheck="false" />
+          </div>
+
+          <div class="govuk-button-group">
+            <button class="govuk-button">Continue</button>
+            <a routerLink="../view" role="button" class="govuk-button govuk-button--secondary">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

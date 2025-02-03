@@ -1,0 +1,21 @@
+[
+		{
+			"Year": "2024",
+			"Weightings": {
+				"TotalCapacity": "70.0",
+				"IndividualCapacity": "45.0",
+				"AlternativeSystemFuelTypes": [
+					{
+						"Code": "Unknown",
+						"Value": "999"
+					}
+				],
+				"HeatPumpTechnologyTypes": [
+					{
+						"Code": "Unknown",
+						"Value": "999"
+					}
+				]
+			}
+		}
+	]

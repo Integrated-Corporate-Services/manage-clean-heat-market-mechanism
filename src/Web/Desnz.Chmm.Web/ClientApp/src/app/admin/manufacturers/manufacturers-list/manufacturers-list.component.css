@@ -1,0 +1,46 @@
+.show-retired {
+  margin-top: 1.8rem;
+}
+
+.manufacturer-card {
+  gap: 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  margin-bottom: 0.75rem;
+  align-items: flex-start;
+  background-color: #f3f3f3;
+  border: solid 1px #b1b4b6;
+  border-left: solid 5px #b1b4b6;
+  padding: 1rem 2rem 1rem 1rem;
+}
+
+.manufacturer-card__name {
+  flex: 1;
+  flex-basis: 30%;
+}
+
+  .manufacturer-card__name a {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+.manufacturer-card__status {
+  flex: 1;
+  flex-basis: 30%;
+}
+
+.manufacturer-card__licence-holders {
+  flex: 1;
+  flex-basis: 40%;
+}
+
+  .manufacturer-card__licence-holders ul {
+    margin-left: auto;
+    margin-bottom: 0rem;
+    max-width: max-content;
+  }
+
+.scheme-participant {
+  margin-top: 0.25rem;
+}

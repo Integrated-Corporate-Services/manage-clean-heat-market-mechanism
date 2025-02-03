@@ -1,0 +1,45 @@
+<h1 class="govuk-heading-l">View user</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Full name</dt>
+        <dd class="govuk-summary-list__value">
+          {{ command.name }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Email address</dt>
+        <dd class="govuk-summary-list__value">
+          {{ command.email }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Job title</dt>
+        <dd class="govuk-summary-list__value">
+          {{ command.jobTitle }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Telephone number</dt>
+        <dd class="govuk-summary-list__value">
+          {{ command.telephoneNumber }}
+        </dd>
+      </div>
+    </dl>
+
+    <div class="govuk-button-group">
+      <button
+        *ngIf="user && user.status === 'Active'"
+        class="govuk-button caption-button"
+        type="button"
+        (click)="onSubmit()">
+        Edit<span class="govuk-visually-hidden"> Edit user</span>
+      </button>
+      <button *ngIf="user && user.status === 'Active'" class="govuk-button govuk-button--warning" (click)="deactivate()">Deactivate</button>
+    </div>
+
+  </div>
+</div>

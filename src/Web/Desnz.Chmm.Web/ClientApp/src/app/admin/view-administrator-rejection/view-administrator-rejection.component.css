@@ -1,0 +1,21 @@
+.govuk-summary-card {
+  border: none;
+  border-left: 7px solid #1d70b8;
+}
+
+.govuk-summary-card__title-wrapper {
+  background-color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0rem;
+}
+
+.govuk-summary-card__title {
+  font-size: 16pt;
+}
+
+.rejection-completion-msg {
+  margin-bottom: 0rem;
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  color: #3d3d3d;
+}

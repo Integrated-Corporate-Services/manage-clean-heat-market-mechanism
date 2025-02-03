@@ -1,0 +1,159 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Give feedback on the Manage the Clean Heat Market Mechanism service</h1>
+    <h2 class="govuk-heading-m">Satisfaction survey</h2>
+  </div>
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['feelingsTowardsService']">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">
+            {{ feelingsTowardsService }}
+          </legend>
+          <p *ngIf="errors['feelingsTowardsService']"
+             id="feelingsTowardsService-error"
+             class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["feelingsTowardsService"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input formControlName="feelingsTowardsService"
+                     class="govuk-radios__input"
+                     id="feelingsTowardsService-very-satisfied"
+                     name="feelingsTowardsService"
+                     type="radio"
+                     value="Very satisfied" />
+              <label class="govuk-label govuk-radios__label" for="feelingsTowardsService-very-satisfied">Very satisfied</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input formControlName="feelingsTowardsService"
+                     class="govuk-radios__input"
+                     id="feelingsTowardsService-satisfied"
+                     name="feelingsTowardsService"
+                     type="radio"
+                     value="Satisfied" />
+              <label class="govuk-label govuk-radios__label" for="feelingsTowardsService-satisfied">Satisfied</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input formControlName="feelingsTowardsService"
+                     class="govuk-radios__input"
+                     id="feelingsTowardsService-neutral"
+                     name="feelingsTowardsService"
+                     type="radio"
+                     value="Neither satisfied or dissatisfied" />
+              <label class="govuk-label govuk-radios__label" for="feelingsTowardsService-neutral">Neither satisfied or dissatisfied</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input formControlName="feelingsTowardsService"
+                     class="govuk-radios__input"
+                     id="feelingsTowardsService-dissatisfied"
+                     name="feelingsTowardsService"
+                     type="radio"
+                     value="Dissatisfied" />
+              <label class="govuk-label govuk-radios__label" for="feelingsTowardsService-dissatisfied">Dissatisfied</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input formControlName="feelingsTowardsService"
+                     class="govuk-radios__input"
+                     id="feelingsTowardsService-very-dissatisfied"
+                     name="feelingsTowardsService"
+                     type="radio"
+                     value="Very dissatisfied" />
+              <label class="govuk-label govuk-radios__label" for="feelingsTowardsService-very-dissatisfied">Very dissatisfied</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['serviceMeetsNeeds']">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">
+            {{ serviceMeetsNeeds }}
+          </legend>
+          <p *ngIf="errors['serviceMeetsNeeds']"
+             id="serviceMeetsNeeds-error"
+             class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["serviceMeetsNeeds"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input formControlName="serviceMeetsNeeds"
+                     class="govuk-radios__input"
+                     id="serviceMeetsNeeds-yes"
+                     name="serviceMeetsNeeds"
+                     type="radio"
+                     value="Yes" />
+              <label class="govuk-label govuk-radios__label" for="serviceMeetsNeeds-yes">Yes</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input formControlName="serviceMeetsNeeds"
+                     class="govuk-radios__input"
+                     id="serviceMeetsNeeds-no"
+                     name="serviceMeetsNeeds"
+                     type="radio"
+                     value="No" />
+              <label class="govuk-label govuk-radios__label" for="serviceMeetsNeeds-no">No</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="1000">
+        <div class="govuk-form-group"
+             [class.govuk-form-group--error]="errors['serviceImprovements']">
+          <label class="govuk-label" for="serviceImprovements">
+            {{ serviceImprovements }}
+          </label>
+          <div class="govuk-hint">
+            Do not provide any company sensitive information
+          </div>
+          <p *ngIf="errors['serviceImprovements']"
+             id="serviceImprovements-error"
+             class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["serviceImprovements"] }}
+          </p>
+          <textarea formControlName="serviceImprovements"
+                    class="govuk-textarea govuk-js-character-count"
+                    id="serviceImprovements"
+                    name="serviceImprovements"
+                    rows="5"
+                    aria-describedby="serviceImprovements-info"></textarea>
+        </div>
+        <div id="serviceImprovements-info" class="govuk-hint govuk-character-count__message">
+          You can enter up to 1,000 characters
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-!-margin-2">&nbsp;</div>
+  <h3 class="govuk-heading-m">Confirm your answers and create an email to send to the Administrator</h3>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <p class="govuk-body">
+        When you click the button below, your answers will be populated into an email for you to send.
+        <b>You must click send on your email to ensure your feedback is sent.</b>
+      </p>
+      <br />
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Create email
+        </button>
+        <button type="button"
+                class="govuk-button govuk-button--secondary"
+                data-module="govuk-button"
+                (click)="previousPage()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

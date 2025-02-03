@@ -1,0 +1,93 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 class="govuk-heading-m">{{ userId ? "Edit " : "Add new " }}user</h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div class="govuk-form-group" [class.govuk-form-group--error]="nameError">
+        <label class="govuk-label" for="name">Full name</label>
+        <p *ngIf="nameError" id="name-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{ nameError }}
+        </p>
+        <input
+          formControlName="name"
+          class="govuk-input"
+          id="name"
+          name="name"
+          type="text"
+        />
+      </div>
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="emailError"
+      >
+        <label class="govuk-label" for="email">Email address</label>
+        <p *ngIf="emailError" id="email-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{ emailError }}
+        </p>
+        <input
+          formControlName="email"
+          class="govuk-input"
+          id="email"
+          name="email"
+          type="text"
+        />
+      </div>
+      <!--
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="permissionError"
+      >
+        <label class="govuk-label" for="permission">Permission level</label>
+        <p
+          *ngIf="permissionError"
+          id="permission-error"
+          class="govuk-error-message"
+        >
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ permissionError }}
+        </p>
+        <select
+          *ngIf="roles$ | async; let roles"
+          formControlName="roleId"
+          class="govuk-select"
+          id="permission"
+          name="permission"
+        >
+          <option *ngIf="roles.loading" value="Loading roles..."></option>
+          <option *ngFor="let role of roles?.data" [value]="role.id">
+            {{ role.name }}
+          </option>
+        </select>
+      </div>
+        -->
+      <div *ngIf="userId && user" class="govuk-form-group">
+        <label class="govuk-label" for="name">Status</label>
+        <admin-list-status [status]="user.status"></admin-list-status>
+      </div>
+      <div class="govuk-button-group">
+        <ng-container *ngIf="userId && user && user.status === 'Inactive'; else regularSave">
+          <button type="button"
+                  class="govuk-button"
+                  routerLink="/admin/users/edit/{{ user.id }}/confirm-status-change">
+            Activate
+          </button>
+          <button class="govuk-button govuk-button--secondary" type="submit">Continue</button>
+        </ng-container>
+        <ng-template #regularSave>
+          <button class="govuk-button" type="submit">Continue</button>
+        </ng-template>
+        <button class="govuk-button govuk-button--secondary"
+                type="button"
+                routerLink="/admin/users"
+                (click)="onCancel()">
+          Cancel
+        </button>
+        <button *ngIf="userId && user && user.status === 'Active'"
+                type="button"
+                class="govuk-button govuk-button--warning"
+                routerLink="/admin/users/edit/{{ user.id }}/confirm-status-change">
+          Deactivate
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

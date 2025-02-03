@@ -1,0 +1,27 @@
+<div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">
+    New user added
+  </h1>
+  <div class="govuk-panel__body">
+    Added {{ command.name }}
+  </div>
+</div>
+
+<br />
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      The user account has now been created.
+      They will need to go to the M-CHMM IT system start page to log in.
+      They will need to create a GOV.UK One Login to do so.
+    </p>
+    <h2 class="govuk-heading-m">What would you like to do next?</h2>
+    <ul class="govuk-list">
+      <li *ngFor="let link of links">
+        <a class="govuk-link" [routerLink]="[link.route]">{{ link.name }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

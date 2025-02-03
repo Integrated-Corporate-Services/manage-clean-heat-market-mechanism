@@ -1,0 +1,303 @@
+<ng-container *ngIf="boilerSales$ | async; let boilerSalesRequest">
+  <ng-container *ngIf="boilerSalesRequest.loading; else page">
+    <p class="govuk-body">Loading boiler sales summary...</p>
+  </ng-container>
+  <ng-template #page>
+    <ng-container
+      *ngIf="boilerSalesRequest.data as boilerSalesData; let boilerSales"
+    >
+      <ng-container *ngIf="boilerSales.annual as boilerSalesAnnual; let annual">
+        <h1 class="govuk-heading-l">
+          Boiler sales summary {{ boilerSales.year }}
+        </h1>
+        <div class="govuk-grid-row" *ngIf="boilerSales.annual.status != 'N/A'">
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-summary-card">
+              <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title">
+                  Annual verified boiler sales
+                </h2>
+                <ul class="govuk-summary-card__actions">
+                  <li class="govuk-summary-card__action">
+                    <a
+                      *ngIf="boilerSales.annual.status === 'Due'"
+                      class="govuk-button"
+                      role="button"
+                      routerLink="/scheme-year/{{
+                        schemeYearId
+                      }}/organisation/{{
+                        organisationId
+                      }}/boiler-sales/annual/submit"
+                    >
+                      Submit now
+                    </a>
+                    <ng-container *ngIf="isAdmin$ | async">
+                      <a
+                        *ngIf="(annual.status === 'Submitted' || annual.status === 'Approved') && allowEdit"
+                        class="govuk-link"
+                        [ngStyle]="{ color: '#1d70b8' }"
+                        routerLink="/scheme-year/{{
+                          schemeYearId
+                        }}/organisation/{{
+                          organisationId
+                        }}/boiler-sales/annual/edit"
+                      >
+                        Edit
+                      </a>
+                      &nbsp;
+                      <a
+                        *ngIf="annual.status === 'Submitted'"
+                        class="govuk-link"
+                        [ngStyle]="{ color: '#1d70b8' }"
+                        routerLink="/scheme-year/{{
+                          schemeYearId
+                        }}/organisation/{{
+                          organisationId
+                        }}/boiler-sales/annual/approve"
+                      >
+                        Approve
+                      </a>
+                    </ng-container>
+                  </li>
+                </ul>
+              </div>
+              <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Gas</dt>
+                    <dd class="govuk-summary-list__value">
+                      <ng-container
+                        *ngIf="annual.status == 'Due'; else hasGasSales"
+                      >
+                        - <span class="govuk-visually-hidden">no data</span>
+                      </ng-container>
+                      <ng-template #hasGasSales>
+                        {{ annual.gas | number }}
+                      </ng-template>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Oil</dt>
+                    <dd class="govuk-summary-list__value">
+                      <ng-container
+                        *ngIf="annual.status == 'Due'; else hasOilSales"
+                      >
+                        - <span class="govuk-visually-hidden">no data</span>
+                      </ng-container>
+                      <ng-template #hasOilSales>
+                        {{ annual.oil | number }}
+                      </ng-template>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Verifier's assurance report</dt>
+                    <dd class="govuk-summary-list__value">
+                      <ul class="govuk-list">
+                        <li *ngFor="let file of annual.verificationFiles">
+                          <a
+                            download="{{ file.fileName }}"
+                            class="govuk-link"
+                            href="/api/boilersales/organisation/{{
+                              organisationId
+                            }}/year/{{
+                              schemeYearId
+                            }}/annual/verification-statement/download?fileName={{
+                              file.fileName
+                            }}"
+                          >
+                            {{ file.fileName }}
+                          </a>
+                        </li>
+                      </ul>
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Supporting evidence</dt>
+                    <dd class="govuk-summary-list__value">
+                      <ul class="govuk-list">
+                        <li *ngFor="let file of annual.evidenceFiles">
+                          <a
+                            download="{{ file.fileName }}"
+                            class="govuk-link"
+                            href="/api/boilersales/organisation/{{
+                              organisationId
+                            }}/year/{{
+                              schemeYearId
+                            }}/annual/supporting-evidence/download?fileName={{
+                              file.fileName
+                            }}"
+                          >
+                            {{ file.fileName }}
+                          </a>
+                        </li>
+                      </ul>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+            <div
+              *ngIf="boilerSales.annual.status === 'Approved'"
+              class="govuk-warning-text"
+            >
+              <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+              <strong class="govuk-warning-text__text">
+                <span class="govuk-visually-hidden">Warning</span>
+                These numbers have been approved
+              </strong>
+            </div>
+          </div>
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Why do I need to submit annual sales?
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              If you are a Scheme Participant or Near-threshold supplier you are required to submit quarterly boiler sales so that your low-carbon heat target can be estimated throughout the year.
+              The quarterly data does not need to be verified.
+              <br /><br />
+              If you are a Scheme Participant, you are then required to submit separate annual sales data as this is what will be used to calculate your final target for the scheme year.
+              The annual sales data must be independently verified.
+              See the scheme guidance for more information.
+            </div>
+          </details>
+        </div>
+        <div class="govuk-grid-row">
+          <ng-container *ngFor="let quarter of boilerSales.quarters">
+            <div
+              class="govuk-grid-column-one-quarter"
+              *ngIf="quarter.status === 'Due'"
+            >
+              <div class="submit-quarter-card">
+                <h3 class="govuk-heading-s">{{ quarter.name }} sales</h3>
+                <a
+                  class="govuk-button"
+                  role="button"
+                  routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                    organisationId
+                  }}/boiler-sales/quarter/{{
+                    quarter.schemeYearQuarterId
+                  }}/submit"
+                >
+                  Submit now
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <p class="govuk-body">
+          This page summarises your boiler sales figures submitted for this scheme year.
+          You are required to report your quarterly boiler sales if you are a Scheme Participant or Near-Threshold Supplier.
+          See the scheme guidance for more information about how to report your boiler sales figures to comply with the CHMM. 
+          <br /><br />
+          It is recommended that you upload supporting evidence using the template provided by the Administrator.
+          For a copy of the template please contact the Administrator via the CHMM Helpdesk at
+          <a class="govuk-link" href="mailto:chmm@environment-agency.gov.uk">chmm@environment-agency.gov.uk</a>.
+        </p>
+        <br />
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">
+            Quarterly boiler sales
+          </caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Quarter</th>
+              <th scope="col" class="govuk-table__header">Dates</th>
+              <th scope="col" class="govuk-table__header right-align">Gas</th>
+              <th scope="col" class="govuk-table__header right-align">Oil</th>
+              <th scope="col" class="govuk-table__header">
+                Supporting evidence
+              </th>
+              <th *ngIf="isAdmin$ | async" scope="col" class="govuk-table__header">
+                <span class="govuk-visually-hidden">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr
+              class="govuk-table__row"
+              *ngFor="let quarter of boilerSales.quarters"
+            >
+              <td class="govuk-table__cell">{{ quarter.name }}</td>
+              <td class="govuk-table__cell">{{ quarter.dates }}</td>
+              <td class="govuk-table__cell right-align">
+                <ng-container
+                  *ngIf="quarter.status == 'N/A' || quarter.status == 'Due'; else hasGasSales"
+                >
+                  - <span class="govuk-visually-hidden">no data</span>
+                </ng-container>
+                <ng-template #hasGasSales>
+                  {{ quarter.gas | number }}
+                </ng-template>
+              </td>
+              <td class="govuk-table__cell right-align">
+                <ng-container
+                  *ngIf="quarter.status == 'N/A' || quarter.status == 'Due'; else hasOilSales"
+                >
+                  - <span class="govuk-visually-hidden">no data</span>
+                </ng-container>
+                <ng-template #hasOilSales>
+                  {{ quarter.oil | number }}
+                </ng-template>
+              </td>
+              <td class="govuk-table__cell quarterly-file-cell">
+                <ng-container
+                  *ngIf="(quarter.files?.length || 0) == 0; else hasFiles"
+                >
+                  No files
+                </ng-container>
+                <ng-template #hasFiles>
+                  <ng-container *ngFor="let file of quarter.files">
+                    <a
+                      download="{{ file.fileName }}"
+                      title="{{ file.fileName }}"
+                      class="govuk-link link-restricted-size"
+                      href="/api/boilersales/organisation/{{
+                        organisationId
+                      }}/year/{{ schemeYearId }}/quarter/{{
+                        quarter.schemeYearQuarterId
+                      }}/supporting-evidence/download?fileName={{
+                        file.fileName
+                      }}"
+                    >
+                      {{ file.fileName }}
+                    </a>
+                  </ng-container>
+                </ng-template>
+              </td>
+              <td *ngIf="isAdmin$ | async" class="govuk-table__cell">
+                <ng-container
+                  *ngIf="(!allowEditQuarterly) || quarter.status == 'N/A' || quarter.status == 'Due'; else hasQuarterData"
+                >
+                  <span class="govuk-visually-hidden">no actions</span>
+                </ng-container>
+                <ng-template #hasQuarterData>
+                  <a href="/scheme-year/{{ schemeYearId }}/organisation/{{ organisationId }}/boiler-sales/quarter/{{ quarter.schemeYearQuarterId }}/edit" class="govuk-link">
+                    edit
+                    <span class="govuk-visually-hidden">
+                      {{quarter.name}}
+                    </span>
+                  </a>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__cell" colspan="2">Total</th>
+              <th scope="row" class="govuk-table__cell right-align">
+                {{ boilerSales.total.gas | number }}
+              </th>
+              <th scope="row" class="govuk-table__cell right-align">
+                {{ boilerSales.total.oil | number }}
+              </th>
+              <th scope="row" class="govuk-table__cell">&nbsp;</th>
+              <th *ngIf="isAdmin$ | async" scope="row" class="govuk-table__cell">&nbsp;</th>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+</ng-container>

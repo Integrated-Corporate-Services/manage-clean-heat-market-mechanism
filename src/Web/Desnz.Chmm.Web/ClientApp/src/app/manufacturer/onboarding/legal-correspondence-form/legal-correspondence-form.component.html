@@ -1,0 +1,102 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 4 of 9</h1>
+    <h2 class="govuk-heading-l">Legal correspondence address</h2>
+    <h3 class="govuk-heading-s">
+      If you are a Scheme Participant or Near-threshold Supplier
+    </h3>
+    <p class="govuk-body">
+      You must provide an address for legal correspondence (see the Scheme Guidance for more information).
+      This can be your registered office address or it can be a different address.
+      It must be an address in the UK.
+    </p>
+    <h3 class="govuk-heading-s">If you are not a Scheme Participant or Near-threshold Supplier</h3>
+    <p class="govuk-body">
+      You do not need to provide an address for legal correspondence.
+    </p>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['isUsedAsLegalCorrespondence']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              Which address should be used for legal correspondence?
+            </h2>
+          </legend>
+          <p
+            *ngIf="errors['isUsedAsLegalCorrespondence']"
+            id="isUsedAsLegalCorrespondence-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["isUsedAsLegalCorrespondence"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isUsedAsLegalCorrespondence"
+                class="govuk-radios__input"
+                id="yes"
+                name="isUsedAsLegalCorrespondence"
+                type="radio"
+                value="Yes"
+              />
+              <label class="govuk-label govuk-radios__label" for="yes"
+                >Use the registered office address</label
+              >
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isUsedAsLegalCorrespondence"
+                class="govuk-radios__input"
+                id="no"
+                name="isUsedAsLegalCorrespondence"
+                type="radio"
+                value="No"
+                data-aria-controls="conditional-no"
+                (ngModelChange)="onProvideAnotherAddress()"
+              />
+              <label class="govuk-label govuk-radios__label" for="no"
+                >Use a different address</label
+              >
+            </div>
+            <div
+              class="govuk-radios__conditional"
+              [class.govuk-radios__conditional--hidden]="
+                form.controls.isUsedAsLegalCorrespondence.value !== 'No'
+              "
+              id="conditional-no"
+            >
+              <address-form
+                (init)="onInitAddressForm()"
+                [showHeadingAndLegend]="false"
+              ></address-form>
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isUsedAsLegalCorrespondence"
+                class="govuk-radios__input"
+                id="isNonSchemeParticipant"
+                name="isUsedAsLegalCorrespondence"
+                type="radio"
+                value="IsNonSchemeParticipant"
+              />
+              <label class="govuk-label govuk-radios__label"
+                     for="isNonSchemeParticipant">I am not not a Scheme Participant or Near-threshold Supplier</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        [disabled]="loading$ | async"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

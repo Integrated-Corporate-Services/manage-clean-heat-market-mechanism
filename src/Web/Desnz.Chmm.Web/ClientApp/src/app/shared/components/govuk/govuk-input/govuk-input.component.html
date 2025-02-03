@@ -1,0 +1,26 @@
+<div class="govuk-form-group">
+  <label *ngIf="state.label" class="govuk-label" for="{{ state.id }}">
+    {{ state.label }}
+  </label>
+  <div *ngIf="state.hint" id="{{ state.id }}-hint" class="govuk-hint">
+    {{ state.hint }}
+  </div>
+  <input
+    *ngIf="!state.units"
+    class="govuk-input govuk-input--width-{{ state.width }}"
+    id="{{ state.id }}"
+    name="{{ state.id }}"
+    spellcheck="false"
+    type="text"
+  />
+  <div *ngIf="state.units" class="govuk-input__wrapper">
+    <input
+      class="govuk-input govuk-input--width-{{ state.width }}"
+      id="{{ state.id }}"
+      name="{{ state.id }}"
+      type="text"
+      spellcheck="false"
+    />
+    <div class="govuk-input__suffix" aria-hidden="true">{{ state.units }}</div>
+  </div>
+</div>

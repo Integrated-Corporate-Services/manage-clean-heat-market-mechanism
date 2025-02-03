@@ -1,0 +1,147 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 *ngIf="showHeadingAndLegend"
+        class="govuk-heading-l govuk-!-font-weight-regular">
+      Question 7 of 9
+    </h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <ng-container *ngIf="showHeadingAndLegend">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <h2 class="govuk-fieldset__heading">Your details</h2>
+            </legend>
+          </ng-container>
+          <div class="govuk-!-margin-1">&nbsp;</div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <div class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['fullName']">
+                <label class="govuk-label" for="fullName">Full name</label>
+                <p *ngIf="errors['fullName']"
+                   id="fullName-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["fullName"] }}
+                </p>
+                <input formControlName="fullName"
+                       class="govuk-input"
+                       id="fullName"
+                       name="fullName"
+                       type="text"
+                       autocomplete="name"
+                       spellcheck="false"
+                       [class.govuk-!-width-two-thirds]="showHeadingAndLegend" />
+              </div>
+              <div class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['emailAddress']">
+                <label class="govuk-label" for="emailAddress">Email address</label>
+                <p *ngIf="errors['emailAddress']"
+                   id="emailAddress-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["emailAddress"] }}
+                </p>
+                <input formControlName="emailAddress"
+                       type="email"
+                       class="govuk-input"
+                       id="emailAddress"
+                       name="emailAddress"
+                       type="emailAddress"
+                       autocomplete="email"
+                       spellcheck="false"
+                       [class.govuk-!-width-two-thirds]="showHeadingAndLegend" />
+              </div>
+              <div class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['jobTitle']">
+                <label class="govuk-label" for="jobTitle"> Job title </label>
+                <p *ngIf="errors['jobTitle']"
+                   id="jobTitle-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["jobTitle"] }}
+                </p>
+                <input formControlName="jobTitle"
+                       class="govuk-input"
+                       id="jobTitle"
+                       name="jobTitle"
+                       type="text"
+                       autocomplete="on"
+                       [class.govuk-!-width-two-thirds]="showHeadingAndLegend" />
+              </div>
+              <div *ngIf="!showHeadingAndLegend"
+                   class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['organisation']">
+                <label class="govuk-label" for="organisation">
+                  Organisation
+                </label>
+                <p *ngIf="errors['organisation']"
+                   id="organisation-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["organisation"] }}
+                </p>
+                <input formControlName="organisation"
+                       class="govuk-input"
+                       id="organisation"
+                       name="organisation"
+                       type="text"
+                       autocomplete="on" />
+              </div>
+              <div class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['telephoneNumber']">
+                <label class="govuk-label" for="telephoneNumber">Telephone number</label>
+                <p *ngIf="errors['telephoneNumber']"
+                   id="telephoneNumber-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["telephoneNumber"] }}
+                </p>
+                <input formControlName="telephoneNumber"
+                       type="tel"
+                       class="govuk-input"
+                       style="width: 24ch"
+                       id="telephoneNumber"
+                       name="telephoneNumber"
+                       type="text"
+                       autocomplete="tel" />
+              </div>
+              <div *ngIf="showHeadingAndLegend"
+                   class="govuk-form-group"
+                   [class.govuk-form-group--error]="errors['confirmation']">
+                <p *ngIf="errors['confirmation']"
+                   id="confirmation-error"
+                   class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["confirmation"] }}
+                </p>
+                <div class="govuk-checkboxes__item">
+                  <input formControlName="confirmation"
+                         class="govuk-checkboxes__input"
+                         id="confirmation"
+                         name="confirmation"
+                         type="checkbox"
+                         value="false" />
+                  <label class="govuk-label govuk-checkboxes__label govuk-!-padding-top-0"
+                         for="confirmation">
+                    I confirm that I am directly employed by the organisation
+                    that is registering with the Clean Heat Market Mechanism
+                    scheme and/or I have the authority to submit this
+                    registration.
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button *ngIf="showSubmitBtn"
+              type="submit"
+              class="govuk-button"
+              data-module="govuk-button"
+              [disabled]="loading$ | async">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+.govuk-accordion__show-all-text {
+  display: none;
+}
+
+.accordion-section {
+  margin-bottom: 0.75rem;
+}
+
+.accordion-section__heading button,
+.show-hide {
+}
+
+.accordion-section__heading button {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background-color: #1d70b8;
+  outline: none;
+  border: none;
+  cursor: pointer !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+  .accordion-section__heading button h2 {
+    margin: 0px;
+    padding: 0rem 0.3rem;
+    color: white;
+  }
+
+  .accordion-section__heading button span {
+    color: white;
+    padding: 0rem 0.3rem;
+  }
+
+  .accordion-section__heading button:hover {
+    background-color: #104b7f;
+  }
+
+  .accordion-section__heading button:focus h2,
+  .accordion-section__heading button:focus .show-hide-text-container span {
+    outline: 3px solid transparent;
+    color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  }
+
+  .accordion-section__heading button:focus svg {
+    background-color: #fd0;
+    border-radius: 50%;
+  }
+
+    .accordion-section__heading button:focus svg path {
+      fill: #fd0;
+    }
+
+    .accordion-section__heading button:focus svg polygon {
+      fill: black;
+    }
+
+.show-hide {
+  font-size: 1.25rem;
+  width: 9ch;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+  .show-hide svg {
+    max-width: 1.5rem;
+  }
+
+  .show-hide .show-hide-text-container {
+    width: 5ch;
+    text-align: left;
+  }
+
+.accordion-section__body {
+  border: solid 5px #1d70b8;
+  border-top: none;
+  background-color: #efefef;
+  padding: 1rem;
+}
+
+  .accordion-section__body dl {
+    margin-bottom: 0px;
+  }
+
+    .accordion-section__body dl .govuk-summary-list__row:last-child {
+      border-bottom: none;
+    }
+
+.caret-rotate {
+  transform: rotate(180deg);
+}

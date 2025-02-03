@@ -1,0 +1,42 @@
+<header class="govuk-header" role="banner" data-module="govuk-header">
+  <ng-container *ngIf="headerState$ | async; let headerState">
+    <onelogin-navbar
+      [isAuthenticated]="headerState.isAuthenticated"
+    ></onelogin-navbar>
+    <ng-container *ngIf="headerState.isAuthenticated">
+      <service-navbar
+        *ngIf="!headerState.hideServiceNav && isAdmin; else manufacturer"
+        [organisationId]="headerState.currentUserOrgId"
+        [schemeYearId]="headerState.schemeYear?.id"
+        [schemeYearName]="headerState.schemeYear?.year"
+        [showAdminLinks]="headerState.links.showAdmin"
+        [showManufacturerLinks]="headerState.links.showManufacturer"
+      ></service-navbar>
+      <ng-template #manufacturer>
+        <service-navbar
+          *ngIf="!headerState.hideServiceNav && headerState.schemeYear"
+          [organisationId]="headerState.currentUserOrgId"
+          [schemeYearId]="headerState.schemeYear.id"
+          [schemeYearName]="headerState.schemeYear.year"
+          [showAdminLinks]="headerState.links.showAdmin"
+          [showManufacturerLinks]="headerState.links.showManufacturer"
+        ></service-navbar>
+      </ng-template>
+
+      <scheme-year-navbar
+        *ngIf="!headerState.hideSchemeYearSelector && headerState.schemeYear"
+        [organisationName]="headerState.organisation?.name"
+        [organisationId]="headerState.organisation?.id"
+        [isAdmin]="headerState.links.showAdmin"
+        [schemeYear]="headerState.schemeYear.year"
+      ></scheme-year-navbar>
+      <admin-secondary-navbar
+        *ngIf="
+          headerState.links.showAdminSecondaryNav && headerState.schemeYear
+        "
+        [organisationId]="headerState.organisation?.id"
+        [schemeYearId]="headerState.schemeYear.id"
+      ></admin-secondary-navbar>
+    </ng-container>
+  </ng-container>
+</header>

@@ -1,0 +1,32 @@
+<div
+  *ngIf="approveAnnualState$ | async; let approveAnnualState"
+  class="govuk-grid-row"
+>
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l">Are you sure?</h1>
+    <p class="govuk-body">
+      You are about to approve this manufacturer's annual verified boiler sales submission.
+      This will confirm their final low-carbon heat target calculation.
+    </p>
+    <div class="govuk-button-group">
+      <button
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onApprove()"
+        [disabled]="approveAnnualState.loading"
+      >
+        Yes, approve
+      </button>
+      <a
+        role="button"
+        routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+          organisationId
+        }}/boiler-sales"
+        class="govuk-button govuk-button--secondary"
+        data-module="govuk-button"
+      >
+        No, return to boiler sales
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+﻿namespace Desnz.Chmm.Configuration.Common.Dtos
+{
+    public class SchemeYearQuarterDto
+    {
+        public Guid? Id { get; set; }
+        public string Name { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
+    }
+}

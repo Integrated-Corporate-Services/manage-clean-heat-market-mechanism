@@ -1,0 +1,59 @@
+<ng-container *ngIf="administratorRejection$ | async; let administratorRejection">
+  <ng-container *ngIf="administratorRejection.loading; else show">
+    <p class="govuk-body">Loading Administrator attachments and comments...</p>
+  </ng-container>
+  <ng-template #show>
+    <div *ngIf="administratorRejection.data" class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">Administrator rejection notes</h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Attachments</dt>
+            <dd class="govuk-summary-list__value">
+              <ul
+                *ngIf="
+                  administratorRejection.data.fileNames.length > 0;
+                  else noFiles
+                "
+                class="govuk-list"
+              >
+                <li
+                  *ngFor="let fileName of administratorRejection.data?.fileNames"
+                >
+                  <a
+                    download="{{ fileName }}"
+                    class="govuk-link"
+                    href="/api/identity/organisations/{{
+                      organisationId
+                    }}/rejection-comments/download?fileName={{ fileName }}"
+                  >
+                    {{ fileName }}
+                  </a>
+                </li>
+              </ul>
+              <ng-template #noFiles
+                ><p class="govuk-body">No files added</p></ng-template
+              >
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Additional comments</dt>
+            <dd class="govuk-summary-list__value">
+              <span
+                *ngIf="administratorRejection.data.comments; else noComments"
+              >
+                {{ administratorRejection.data.comments }}
+              </span>
+              <ng-template #noComments
+                ><p class="govuk-body">No comments added</p></ng-template
+              >
+            </dd>
+          </div>
+        </dl>
+        <p class="govuk-body rejection-completion-msg">Rejection completed by {{administratorRejection.data.rejectedBy}} on {{administratorRejection.data.rejectedOn | date: 'd MMM yyyy \'at\' h:mm a'}}</p>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

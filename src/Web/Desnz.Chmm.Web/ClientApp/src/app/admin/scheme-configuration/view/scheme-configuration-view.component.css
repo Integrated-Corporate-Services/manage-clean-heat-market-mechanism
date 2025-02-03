@@ -1,0 +1,8 @@
+.govuk-summary-card__title {
+  font-size: 1.5rem;
+}
+
+.govuk-summary-card__actions {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}

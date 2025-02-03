@@ -1,0 +1,144 @@
+<p *ngIf="loading$ | async; else show" class="govuk-body">
+  Loading low-carbon heat target calculation...
+</p>
+<ng-template #show>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="credits-heading-container">
+        <h2 class="govuk-heading-m credits-heading">Low-Carbon Heat Target</h2>
+      </div>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          Low-carbon heat target calculation&nbsp;&nbsp;
+        </caption>
+        <button
+          *ngIf="isAdmin && schemeYearParameters.isWithinAmendObligationsWindow"
+          class="govuk-button caption-button"
+          type="button"
+          routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+            organisationId
+          }}/amend-obligation"
+          (click)="onAmendObligation()"
+        >
+          Amend<span class="govuk-visually-hidden"> low-carbon heat target</span>
+        </button>
+        <tbody class="govuk-table__body">
+          <tr *ngFor="let row of boilerSalesRows" class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
+              {{ row.headerName }}
+            </th>
+            <td class="govuk-table__cell right-align">({{ row.total }})</td>
+            <td class="govuk-table__cell right-align">
+              {{ row.aboveThreshold }}
+            </td>
+          </tr>
+          <tr *ngFor="let row of obligationRows" class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
+              {{ row.headerName }}
+            </th>
+            <td class="govuk-table__cell right-align" colspan="2">
+              {{ row.value }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row total">
+    <div class="govuk-grid-column-three-quarters">
+      <h3
+        *ngIf="
+          boilerSalesSubmissionStatus === 'Not Submitted' ||
+          boilerSalesSubmissionStatus === 'Quarter Submitted'
+        "
+        class="govuk-heading-m"
+      >
+        Total low-carbon heat target to date
+      </h3>
+      <h3
+        *ngIf="
+          boilerSalesSubmissionStatus === 'Annual Submitted' ||
+          boilerSalesSubmissionStatus === 'Annual Approved'
+        "
+        class="govuk-heading-m"
+      >
+        Verified low-carbon heat target
+      </h3>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+      <h2 class="govuk-heading-m total-value">
+        {{ finalObligations }}
+      </h2>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      boilerSalesSubmissionStatus === 'Not Submitted' ||
+      boilerSalesSubmissionStatus === 'Quarter Submitted'
+    "
+    class="govuk-grid-row"
+  >
+    <div class="govuk-grid-column-full">
+      <div class="govuk-hint govuk-!-font-weight-bold">
+        <i>
+          This is estimated until your annual verified data is submitted and
+          approved.
+        </i>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="boilerSalesSubmissionStatus === 'Annual Approved'"
+    class="govuk-grid-row"
+  >
+    <div class="govuk-grid-column-full">
+      <div class="govuk-hint govuk-!-font-weight-bold">
+        <i>
+          This is your final low-carbon heat target based on your annual verified boiler sales data which has been approved by the Administrator.
+        </i>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="schemeYearParameters.isAfterSurrenderDay">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr
+              *ngFor="let row of surrenderDayObligationRows"
+              class="govuk-table__row"
+            >
+              <th scope="row" class="govuk-table__header">
+                {{ row.headerName }}
+              </th>
+              <td class="govuk-table__cell right-align" colspan="2">
+                {{ row.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="govuk-grid-row total">
+      <div class="govuk-grid-column-three-quarters">
+        <h3 class="govuk-heading-m">
+          Low-carbon heat target not met
+        </h3>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <h2 class="govuk-heading-m total-value">
+          {{ remainingObligations }}
+        </h2>
+      </div>
+    </div>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        See Scheme Guidance for what you need to do about your unmet low-carbon heat target.
+      </strong>
+    </div>
+  </ng-container>
+</ng-template>

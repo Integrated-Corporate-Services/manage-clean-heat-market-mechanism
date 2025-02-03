@@ -1,0 +1,111 @@
+<p *ngIf="loading; else show" class="govuk-body">
+  Loading credit balance calculation...
+</p>
+<ng-template #show>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="credits-heading-container">
+        <h2 class="govuk-heading-m credits-heading">Credits</h2>
+      </div>
+      <ng-container *ngIf="organisations$ | async; let organisations">
+        <div class="govuk-inset-text transfer-inset" *ngIf="organisations.data">
+          <span *ngIf="organisations.data.length > 1">
+            {{ organisations.data.length }} organisations have shared their contact details for transferring credits.
+          </span>
+          <span *ngIf="organisations.data.length == 1">
+            1 organisation has shared their contact details for transferring credits.
+          </span>
+          <span *ngIf="organisations.data.length == 0">
+            No organisations have shared their contact details for transferring credits.
+          </span>
+          <a class="govuk-link" routerLink="../transfer-contacts">View this list</a>.
+          <button *ngIf="!isAdmin && schemeYearParameters.isWithinCreditTranferWindow"
+                  class="govuk-button"
+                  (click)="onTransferCredits()">
+            Transfer credits
+          </button>
+        </div>
+      </ng-container>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          Credit balance calculation&nbsp;&nbsp;
+        <button *ngIf="isAdmin && schemeYearParameters.isWithinAmendCreditsWindow"
+                class="govuk-button caption-button"
+                (click)="onAmendCredits()">
+          Amend<span class="govuk-visually-hidden"> credit balance</span>
+        </button>
+        </caption>
+        <tbody class="govuk-table__body">
+          <tr *ngFor="let row of creditRows" class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
+              <ng-container *ngIf="row.link === null">
+                {{ row.heading }}
+              </ng-container>
+              <ng-container *ngIf="row.link !== null">
+                <a class="govuk-link" routerLink="{{ row.link }}">{{ row.heading }}</a>
+              </ng-container>
+            </th>
+            <td class="govuk-table__cell">
+              {{ row.value }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row total">
+    <div class="govuk-grid-column-three-quarters">
+      <h3 *ngIf="!schemeYearParameters.isAfterSurrenderDay; else before"
+          class="govuk-heading-m">
+        Current credit balance
+      </h3>
+      <ng-template #before>
+        <h3 class="govuk-heading-m">Final credit balance</h3>
+      </ng-template>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+      <h2 class="govuk-heading-m total-value">
+        {{ creditBalance }}
+      </h2>
+    </div>
+  </div>
+
+  <ng-container *ngIf="schemeYearParameters.isAfterSurrenderDay">
+    <br />
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr *ngFor="let row of surrenderDayCreditRows"
+                class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                <ng-container *ngIf="row.link === null">
+                  {{ row.heading }}
+                </ng-container>
+                <ng-container *ngIf="row.link !== null">
+                  <a class="govuk-link" routerLink="{{ row.link }}">{{ row.heading }}</a>
+                </ng-container>
+              </th>
+              <td class="govuk-table__cell">
+                {{ row.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="govuk-grid-row total">
+      <div class="govuk-grid-column-three-quarters">
+        <h3 class="govuk-heading-m">
+          Expired credits
+        </h3>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <h2 class="govuk-heading-m total-value">
+          {{ creditsExpired }}
+        </h2>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

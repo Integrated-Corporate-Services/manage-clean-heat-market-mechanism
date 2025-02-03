@@ -1,0 +1,31 @@
+dt {
+  width: 45%;
+  font-weight: normal;
+}
+
+h3 {
+  margin-bottom: 0rem;
+  margin-top: 1.5rem;
+}
+
+  h3:first-of-type {
+    margin-top: 0rem;
+  }
+
+.govuk-summary-list {
+  margin-bottom: 1rem;
+}
+
+  .govuk-summary-list:last-of-type {
+    margin-bottom: 0rem;
+  }
+
+
+.govuk-summary-list__row {
+  border-bottom: none !important;
+}
+
+hr {
+  width: 100%;
+  margin: auto;
+}

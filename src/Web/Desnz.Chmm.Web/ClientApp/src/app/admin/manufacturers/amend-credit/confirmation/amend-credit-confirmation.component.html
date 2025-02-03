@@ -1,0 +1,27 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Credit balance amended</h1>
+      <div
+        *ngIf="creditAmendment$ | async; let creditAmendment"
+        class="govuk-panel__body"
+      >
+        <ng-container *ngIf="creditAmendment.addingOrRemoving === 'Adding'"
+          >Added {{ creditAmendment.amount }} to {{ organisationName }}'s
+          balance</ng-container
+        >
+        <ng-container
+          *ngIf="creditAmendment.addingOrRemoving === 'Removing'"
+          >Removed {{ creditAmendment.amount }} from
+          {{ organisationName }}'s balance</ng-container
+        >
+      </div>
+    </div>
+    <div class="govuk-!-margin-2">&nbsp;</div>
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      You have successfully amended the credit balance for this manufacturer.
+      You and the manufacturer will be able to see this on the summary page.
+    </p>
+  </div>
+</div>

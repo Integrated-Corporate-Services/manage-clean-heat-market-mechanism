@@ -1,0 +1,32 @@
+ul.service-header__nav {
+  display: flex;
+}
+
+li.service-header__nav-list-item {
+  margin-right: 0rem;
+  display: block;
+}
+
+a.service-header__nav-list-item-link {
+  padding: 0rem;
+  margin: 0rem 1rem 0rem 0rem;
+}
+
+div.service-header__container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.service-header__container nav {
+  flex: 1 0 auto;
+}
+
+span.service-header__nav-custom-header {
+  font-weight: bold;
+  margin-top: -0.3rem;
+  margin-bottom: 0rem;
+  width: max-content;
+}

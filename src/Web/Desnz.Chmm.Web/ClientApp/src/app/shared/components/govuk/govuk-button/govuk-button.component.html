@@ -1,0 +1,18 @@
+<button
+  *ngIf="state.disabled === false"
+  class="{{ classes }}"
+  data-module="govuk-button"
+  data-prevent-double-click="true"
+>
+  {{ state.text }}
+</button>
+<button
+  *ngIf="state.disabled === true"
+  class="{{ classes }}"
+  data-module="govuk-button"
+  data-prevent-double-click="true"
+  disabled="disabled"
+  aria-disabled="true"
+>
+  {{ state.text }}
+</button>

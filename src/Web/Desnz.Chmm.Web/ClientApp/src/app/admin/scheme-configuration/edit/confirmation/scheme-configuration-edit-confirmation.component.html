@@ -1,0 +1,24 @@
+<div *ngIf="schemeYear$ | async; let schemeYear" class="govuk-grid-row">
+  <div *ngIf="schemeYear.data" class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Scheme parameters changed</h1>
+      <div class="govuk-panel__body">
+        Parameters changed for the {{ schemeYear.data.name }} scheme year
+      </div>
+    </div>
+    <div class="govuk-!-margin-2">&nbsp;</div>
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      You have successfully changed the scheme parameters.
+      You can continue to change the parameters up until the end of the day on {{ schemeYear.data | endDate }}.
+    </p>
+    <h2 class="govuk-heading-m">What would you like to do next?</h2>
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" routerLink="../view">
+          Back to view scheme parameters for {{ schemeYear.data.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

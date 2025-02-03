@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "node_modules/@ministryofjustice/frontend/moj/all";
+@import "node_modules/govuk-frontend/govuk/all";
+@import "node_modules/govuk-one-login-service-header/dist/styles/service-header-no-imports.scss";
+@import "node_modules/home-office-kit/sass/_loadingSpinner.scss";
+
+// Custom GOV.UK styles
+
+// Buttons
+.govuk-button--yellow,
+.govuk-button--yellow:hover,
+.govuk-button--yellow:focus {
+  background-color: #ffdd00;
+  color: #0b0c0c;
+}
+
+.govuk-panel--confirmation .govuk-panel__title {
+  word-break: break-word;
+}

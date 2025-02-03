@@ -1,0 +1,154 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1
+      *ngIf="showHeadingAndLegend"
+      class="govuk-heading-l govuk-!-font-weight-regular"
+    >
+      Question 3 of 9
+    </h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <ng-container *ngIf="showHeadingAndLegend">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <h2 class="govuk-fieldset__heading">Registered office address</h2>
+            </legend>
+            <div id="address-hint" class="govuk-hint">
+              Provide the registered address of your organisation or of the Responsible Undertaking.
+              If the organisation is registered on Companies House, you should use the address registered there.
+            </div>
+          </ng-container>
+          <div class="govuk-!-margin-1">&nbsp;</div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['lineOne']"
+              >
+                <label class="govuk-label" for="lineOne"
+                  >Address line one</label
+                >
+                <p
+                  *ngIf="errors['lineOne']"
+                  id="lineOne-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["lineOne"] }}
+                </p>
+                <input
+                  formControlName="lineOne"
+                  class="govuk-input"
+                  id="lineOne"
+                  name="lineOne"
+                  type="text"
+                  autocomplete="address-line1"
+                />
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['lineTwo']"
+              >
+                <label class="govuk-label" for="lineTwo">
+                  Address line two (optional)
+                </label>
+                <p
+                  *ngIf="errors['lineTwo']"
+                  id="lineTwo-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["lineTwo"] }}
+                </p>
+                <input
+                  formControlName="lineTwo"
+                  class="govuk-input"
+                  id="lineTwo"
+                  name="lineTwo"
+                  type="text"
+                  autocomplete="address-line2"
+                />
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['city']"
+              >
+                <label class="govuk-label" for="city">Town or city</label>
+                <p
+                  *ngIf="errors['city']"
+                  id="city-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["city"] }}
+                </p>
+                <input
+                  formControlName="city"
+                  class="govuk-input govuk-!-width-two-thirds"
+                  id="city"
+                  name="city"
+                  type="text"
+                  autocomplete="on"
+                />
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['county']"
+              >
+                <label class="govuk-label" for="county"
+                  >County (optional)</label
+                >
+                <p
+                  *ngIf="errors['county']"
+                  id="county-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["county"] }}
+                </p>
+                <input
+                  formControlName="county"
+                  class="govuk-input govuk-!-width-two-thirds"
+                  id="county"
+                  name="county"
+                  type="text"
+                />
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['postcode']"
+              >
+                <label class="govuk-label" for="postcode">Post code</label>
+                <p
+                  *ngIf="errors['postcode']"
+                  id="postcode-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["postcode"] }}
+                </p>
+                <input
+                  formControlName="postcode"
+                  class="govuk-input govuk-input--width-10"
+                  id="postcode"
+                  name="postcode"
+                  type="text"
+                  autocomplete="postal-code"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        *ngIf="showSubmitBtn"
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        [disabled]="loading$ | async"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

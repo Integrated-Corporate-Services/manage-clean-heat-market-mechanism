@@ -1,0 +1,27 @@
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" [attr.aria-describedby]="state.id + '-hint'">
+    <legend *ngIf="state.label" class="govuk-fieldset__legend">
+      {{ state.label }}
+    </legend>
+    <div *ngIf="state.hint" id="{{ state.id }}-hint" class="govuk-hint">
+      {{ state.hint }}
+    </div>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item" *ngFor="let option of state.options">
+        <input
+          class="govuk-checkboxes__input"
+          id="{{ state.id }}-{{ option.value }}"
+          name="{{ state.id }}"
+          type="checkbox"
+          value="{{ option.value }}"
+        />
+        <label
+          class="govuk-label govuk-checkboxes__label"
+          for="{{ state.id }}-{{ option.value }}"
+        >
+          {{ option.display }}
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>

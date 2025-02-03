@@ -1,0 +1,61 @@
+<ng-container *ngIf="licenceHolderLink$ | async; let licenceHolderLink">
+  <div
+    *ngIf="
+      editLinkedLicenceHolderFormValue$ | async;
+      let editLinkedLicenceHolderFormValue
+    "
+    class="govuk-grid-row"
+  >
+    <div class="govuk-grid-column-full">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Licence holder link edited</h1>
+        <div
+          *ngIf="
+            editLinkedLicenceHolderFormValue.organisationId;
+            else linkEnded
+          "
+          class="govuk-panel__body"
+        >
+          {{ licenceHolderLink.licenceHolderName }} transferred from
+          {{ organisation?.name }} to
+          {{ editLinkedLicenceHolderFormValue.organisationName }} on
+          {{ editLinkedLicenceHolderFormValue.day }}/{{
+            editLinkedLicenceHolderFormValue.month
+          }}/{{ editLinkedLicenceHolderFormValue.year }}
+        </div>
+        <ng-template #linkEnded>
+          <div class="govuk-panel__body">
+            Link ended between
+            {{ organisation?.name }} and
+            {{ licenceHolderLink.licenceHolderName }} on
+            {{ editLinkedLicenceHolderFormValue.day }}/{{
+              editLinkedLicenceHolderFormValue.month
+            }}/{{ editLinkedLicenceHolderFormValue.year }}
+          </div>
+        </ng-template>
+      </div>
+      <br />
+      <h2 class="govuk-heading-m">What happens now?</h2>
+      <p class="govuk-body">
+        This link has now been edited successfully. You will be able to see this
+        on the manufacturer page(s).
+      </p>
+      <h2 class="govuk-heading-m">What would you like to do next?</h2>
+      <ul class="govuk-list">
+        <li>
+          <a
+            class="govuk-link"
+            routerLink="/organisation/{{ organisationId }}/licence-holders"
+          >
+            Back to licence holder page
+          </a>
+        </li>
+        <li>
+          <a class="govuk-link" routerLink="/admin/organisation">
+            View all manufacturers
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,171 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 1 of 9</h1>
+    <h2 class="govuk-heading-l">Organisation structure</h2>
+    <h3 class="govuk-heading-s">
+      If you are a Scheme Participant or Near-threshold Supplier
+    </h3>
+    <p class="govuk-body">
+      The Clean Heat Market Mechanism states that if an organisation operates as
+      a group of connected organisations manufacturing relevant fossil fuel
+      boilers or heat pumps for the UK market, one organisation must register on
+      behalf of the group. This organisation is known as the
+      <b>'Responsible Undertaking'</b>.
+    </p>
+    <p class="govuk-body">
+      If you are registering on behalf of a group of organisations, you will be asked to provide information on the relevant organisations within your group.
+      See the Scheme Guidance for more help on this.
+    </p>
+    <h3 class="govuk-heading-s">
+      If you are not a Scheme Participant or Near-threshold Supplier
+    </h3>
+    <p class="govuk-body">
+      The Clean Heat Market Mechanism states that you can register as an
+      individual or group of companies.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      If you do not know what type of supplier you are
+    </h3>
+    <p class="govuk-body">
+      See the Scheme Guidance for more details. You can also contact the Administrator by emailing
+      <a class="govuk-link" href="mailto: chmm@environment-agency.gov.uk">chmm@environment-agency.gov.uk</a>.
+    </p>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['isOnBehalfOfGroup']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              Is this registration on behalf of a group of organisations?
+            </h2>
+          </legend>
+          <p
+            *ngIf="errors['isOnBehalfOfGroup']"
+            id="isOnBehalfOfGroup-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["isOnBehalfOfGroup"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isOnBehalfOfGroup"
+                class="govuk-radios__input"
+                id="yes"
+                name="isOnBehalfOfGroup"
+                type="radio"
+                value="Yes"
+              />
+              <label class="govuk-label govuk-radios__label" for="yes"
+                >Yes</label
+              >
+            </div>
+            <div
+              class="govuk-radios__conditional"
+              [class.govuk-radios__conditional--hidden]="
+                form.controls.isOnBehalfOfGroup.value !== 'Yes'
+              "
+              id="conditional-yes"
+            >
+              <div
+                *ngIf="mode === 'submit' || mode === 'default'"
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['files']"
+              >
+                <label class="govuk-label" for="files">
+                  Upload information about the relevant connected organisations
+                </label>
+                <div id="files-hint" class="govuk-hint">
+                  Upload one or more files from the same folder on your
+                  computer. Choosing new or additional files will replace the
+                  existing files.
+                </div>
+                <p
+                  *ngIf="errors['files']"
+                  id="files-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["files"] }}
+                </p>
+                <input
+                  formControlName="files"
+                  class="govuk-file-upload"
+                  id="files"
+                  name="files"
+                  type="file"
+                  (change)="onFileChange($event)"
+                  multiple
+                />
+                <p
+                  *ngIf="fileNames.length > 0"
+                  class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1 govuk-!-margin-top-2"
+                >
+                  Current files chosen
+                </p>
+                <ul *ngIf="fileNames.length > 0" class="govuk-list">
+                  <li *ngFor="let name of fileNames">
+                    <i>{{ name }}</i>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="mode === 'approve' || mode === 'edit'">
+                <p
+                  *ngIf="fileNames.length > 0"
+                  class="govuk-hint govuk-!-margin-top-0 govuk-!-margin-bottom-0"
+                >
+                  Uploaded files
+                </p>
+                <p
+                  *ngIf="fileNames.length == 0"
+                  class="govuk-hint govuk-!-margin-top-0 govuk-!-margin-bottom-0"
+                >
+                  No uploaded files
+                </p>
+                <ul *ngIf="fileNames.length > 0" class="govuk-list">
+                  <li *ngFor="let name of fileNames">
+                    <i>{{ name }}</i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isOnBehalfOfGroup"
+                class="govuk-radios__input"
+                id="no"
+                name="isOnBehalfOfGroup"
+                type="radio"
+                value="No"
+              />
+              <label class="govuk-label govuk-radios__label" for="no">No</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="govuk-button-group">
+        <button
+          type="submit"
+          class="govuk-button"
+          data-module="govuk-button"
+          [disabled]="loading$ | async"
+        >
+          Continue
+        </button>
+        <a
+          *ngIf="mode == 'default'"
+          role="button"
+          routerLink="/"
+          class="govuk-button govuk-button--secondary"
+          data-module="govuk-button"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

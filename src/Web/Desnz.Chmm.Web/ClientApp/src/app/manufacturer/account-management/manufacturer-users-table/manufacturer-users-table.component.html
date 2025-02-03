@@ -1,0 +1,64 @@
+<h1 class="govuk-heading-l">Manage users</h1>
+
+<div *ngIf="isAdmin; else notAdmin" class="govuk-inset-text transfer-inset">
+  <p>GOV.UK One Login is used to sign in to M-CHMM. Users can change these details in GOV.UK One Login:</p>
+    <ul>
+      <li>email address</li>
+      <li>password</li>
+      <li>how they get security codes to sign in</li>
+    </ul>
+  <p>They can do this by clicking the GOV.UK One Login logo when logged in to M-CHMM. Or you can tell them to go directly to <a target="_blank" href="https://home.account.gov.uk/settings">their GOV.UK One Login settings.</a></p>
+</div>
+<ng-template #notAdmin>
+  <div class="govuk-inset-text transfer-inset">
+    <p>You use your GOV.UK One Login to sign in to M-CHMM. You can change these details in your GOV.UK One Login:</p>
+    <ul>
+      <li>email address</li>
+      <li>password</li>
+      <li>how they get security codes to sign in</li>
+    </ul>
+  <p><a target="_blank" href="https://home.account.gov.uk/settings">Change your sign in details in your GOV.UK One Login</a></p>
+  <p>To change all other user details, click on the user in the table below to edit.</p>
+  </div>
+</ng-template>
+
+<a routerLink="invite" class="govuk-button">Add user</a>
+
+<ng-container *ngIf="accounts$ | async; let accounts">
+  <ng-container *ngIf="accounts.loading; else table">
+    <p class="govuk-body">Loading users...</p>
+  </ng-container>
+  <ng-template #table>
+    <ng-container *ngIf="accounts.data">
+      <table class="govuk-table" *ngIf="accounts.data.length > 0">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          Users
+        </caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Full name</th>
+            <th scope="col" class="govuk-table__header">Email address</th>
+            <th scope="col" class="govuk-table__header">Job title</th>
+            <th scope="col" class="govuk-table__header">Telephone number</th>
+            <th scope="col" class="govuk-table__header status-column">Status</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let account of accounts.data">
+            <td class="govuk-table__cell">
+              <a class="govuk-link" routerLink="{{ account.id }}/view">
+                {{ account.name }}
+              </a>
+            </td>
+            <td class="govuk-table__cell">{{ account.email }}</td>
+            <td class="govuk-table__cell">{{ account.jobTitle }}</td>
+            <td class="govuk-table__cell">{{ account.telephoneNumber }}</td>
+            <td class="govuk-table__cell">
+              <manufacturer-list-status [status]="account.status"></manufacturer-list-status>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </ng-template>
+</ng-container>

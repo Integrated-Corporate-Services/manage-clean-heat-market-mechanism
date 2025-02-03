@@ -1,0 +1,67 @@
+<div class="govuk-form-group">
+  <fieldset
+    class="govuk-fieldset"
+    role="group"
+    [attr.aria-describedby]="state.id + '-hint'"
+  >
+    <legend *ngIf="state.label" class="govuk-fieldset__legend">
+      {{ state.label }}
+    </legend>
+    <div *ngIf="state.hint" id="{{ state.id }}-hint" class="govuk-hint">
+      {{ state.hint }}
+    </div>
+    <div class="govuk-date-input" id="{{ state.id }}">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label
+            class="govuk-label govuk-date-input__label"
+            for="{{ state.id }}-day"
+          >
+            Day
+          </label>
+          <input
+            class="govuk-input govuk-date-input__input govuk-input--width-2"
+            id="{{ state.id }}-day"
+            name="{{ state.id }}-day"
+            type="text"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label
+            class="govuk-label govuk-date-input__label"
+            for="{{ state.id }}-month"
+          >
+            Month
+          </label>
+          <input
+            class="govuk-input govuk-date-input__input govuk-input--width-2"
+            id="{{ state.id }}-month"
+            name="{{ state.id }}-month"
+            type="text"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label
+            class="govuk-label govuk-date-input__label"
+            for="{{ state.id }}-year"
+          >
+            Year
+          </label>
+          <input
+            class="govuk-input govuk-date-input__input govuk-input--width-4"
+            id="{{ state.id }}-year"
+            name="{{ state.id }}-year"
+            type="text"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>

@@ -1,0 +1,17 @@
+span.service-header__heading {
+  padding: 0rem;
+  margin: 0.2rem 0rem 0.5rem 0rem;
+}
+
+.service-header__nav-list-item {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  border-bottom: 5px solid transparent;
+}
+a.service-header__nav-list-item-link {
+  padding: 0rem;
+}
+
+div.service-header__container {
+  align-items: center;
+}

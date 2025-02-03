@@ -1,0 +1,91 @@
+<div
+  class="service-header"
+  [style.background-color]="'#ffffff'"
+  data-one-login-header-nav
+>
+  <div class="govuk-width-container">
+    <div class="service-header__container">
+      <nav aria-label="Admin secondary navigation">
+        <ul
+          class="service-header__nav-list service-header__nav"
+          id="service-header__nav"
+          data-open-class="service-header__nav--open"
+        >
+          <li class="service-header__nav-list-item">
+            <a
+              routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                organisationId
+              }}/summary"
+              class="service-header__nav-list-item-link"
+            >
+              Summary
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                organisationId
+              }}/boiler-sales"
+              class="service-header__nav-list-item-link"
+            >
+              Boiler sales
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              routerLink="scheme-year/{{ schemeYearId }}/organisation/{{
+                organisationId
+              }}/heat-pumps"
+              class="service-header__nav-list-item-link"
+            >
+              Heat pumps
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              routerLink="/organisation/{{ organisationId }}/edit/check-answers"
+              [queryParams]="{ fetchData: true, mode: 'edit' }"
+              class="service-header__nav-list-item-link"
+            >
+              Account
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              class="service-header__nav-list-item-link"
+              routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                organisationId
+              }}/notes"
+            >
+              Notes
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              class="service-header__nav-list-item-link"
+              routerLink="/organisation/{{ organisationId }}/licence-holders"
+            >
+              Licence holders
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              class="service-header__nav-list-item-link"
+              routerLink="/organisation/{{ organisationId }}/history"
+            >
+              History
+            </a>
+          </li>
+          <li class="service-header__nav-list-item">
+            <a
+              class="service-header__nav-list-item-link"
+              routerLink="/organisation/{{ organisationId }}/users"
+            >
+              Users
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

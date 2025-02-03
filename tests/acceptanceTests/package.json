@@ -1,0 +1,38 @@
+{
+  "name": "acceptancetests",
+  "version": "1.0.0",
+  "description": "Acceptance tests\r ================",
+  "main": "index.js",
+  "scripts": {
+    "cy:run": "npx cypress run --headed --browser chrome",
+    "cySmokeTest:run": "npx cypress run --headed --env TAGS=@SmokeTest --browser chrome --spec 'cypress/e2e/uitests/*.feature'",
+    "cyAccessibilityTest:run": "npx cypress run --env TAGS=@AccessibilityTest --browser chrome --spec 'cypress/e2e/accessibilityTests/*.feature'",
+    "report:merge": "mochawesome-merge cypress/results/*.json -o cypress/results/mergedreport.json",
+    "report:generate": "marge cypress/results/mergedreport.json --charts true"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cypress/xpath": "^2.0.3",
+    "axe-core": "^4.8.1",
+    "chai": "^5.0.0",
+    "chai-uuid": "^1.0.6",
+    "cypress": "^13.7.0",
+    "cypress-axe": "^1.5.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-file-upload": "^5.0.8",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
+    "uuid": "^9.0.1"
+  },
+  "dependencies": {
+    "cypress-on-fix": "^1.0.2",
+    "cypress-split": "^1.3.17"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "stepDefinitions": "cypress/support/step_definitions"
+  },
+  "keywords": []
+}

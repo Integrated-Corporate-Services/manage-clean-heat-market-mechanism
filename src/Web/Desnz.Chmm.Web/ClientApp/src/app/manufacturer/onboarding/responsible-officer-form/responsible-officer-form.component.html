@@ -1,0 +1,97 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 8 of 9</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['isResponsibleOfficer']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+              Are you the main contact person for your organisation?
+            </h2>
+          </legend>
+          <div id="isResponsibleOfficer-hint" class="govuk-hint">
+            <h3 class="govuk-heading-s">
+              If you are a Scheme Participant or Near-threshold Supplier
+            </h3>
+            <p class="govuk-body">
+              The Clean Heat Market Mechanism policy requires that there is a named person associated with the organisation account who is responsible for receiving any formal notices of legal correspondence.
+              This is known as the Senior Responsible Officer.
+              You do not have to be the Senior Responsible Officer to complete this registration, but you need to provide the details of the person who is.
+              See the Scheme Guidance for more information.
+            </p>
+            <h3 class="govuk-heading-s">If you are not a Scheme Participant or Near-threshold Supplier</h3>
+            <p class="govuk-body">
+              You need to provide the details of a named contact person for your organisation account.
+              This will be the person who the Administrator makes contact with if there are any questions relating to the account.
+            </p>
+          </div>
+          <div class="govuk-!-margin-1">&nbsp;</div>
+          <p
+            *ngIf="errors['isResponsibleOfficer']"
+            id="isResponsibleOfficer-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["isResponsibleOfficer"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isResponsibleOfficer"
+                class="govuk-radios__input"
+                id="yes"
+                name="isResponsibleOfficer"
+                type="radio"
+                value="Yes"
+              />
+              <label class="govuk-label govuk-radios__label" for="yes"
+                >Yes, I am the Senior Responsible Officer or main contact
+                person</label
+              >
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="isResponsibleOfficer"
+                class="govuk-radios__input"
+                id="no"
+                name="isResponsibleOfficer"
+                type="radio"
+                value="No"
+                data-aria-controls="conditional-no"
+                (ngModelChange)="onProvideResponsibleOfficerDetails()"
+              />
+              <label class="govuk-label govuk-radios__label" for="no"
+                >No, I will provide their details</label
+              >
+            </div>
+            <div
+              class="govuk-radios__conditional"
+              [class.govuk-radios__conditional--hidden]="
+                form.controls.isResponsibleOfficer.value !== 'No'
+              "
+              id="conditional-no"
+            >
+              <user-details-form
+                (init)="onInitUserDetailsForm()"
+                [mode]="mode"
+                [showHeadingAndLegend]="false"
+                [disableEmail]="false"
+              ></user-details-form>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        [disabled]="loading$ | async"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

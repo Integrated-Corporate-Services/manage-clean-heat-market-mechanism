@@ -1,0 +1,18 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Select a scheme year</h1>
+    <div class="govuk-!-margin-1">&nbsp;</div>
+    <ng-container *ngIf="schemeYears$ | async; let schemeYears">
+      <ul class="govuk-list" *ngIf="schemeYears.data">
+        <li *ngFor="let schemeYear of schemeYears.data">
+          <a class="govuk-link" routerLink="/scheme-year/{{ schemeYear.id }}/configuration/view">
+            {{ schemeYear.name }}
+          </a>
+          <span class="govuk-tag govuk-tag--grey" *ngIf="schemeYear.isReadOnly">
+            read only
+          </span>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div>

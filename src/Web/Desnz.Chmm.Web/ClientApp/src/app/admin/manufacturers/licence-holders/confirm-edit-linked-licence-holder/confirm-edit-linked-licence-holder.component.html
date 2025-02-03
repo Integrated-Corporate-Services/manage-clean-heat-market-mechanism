@@ -1,0 +1,113 @@
+<ng-container *ngIf="licenceHolderLink$ | async; let licenceHolderLink">
+  <div *ngIf="error$ | async; let error" class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+      <h2 class="govuk-error-summary__title">
+        There is a problem
+      </h2>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list">
+          <li>
+            <a routerLink="#check">{{ error }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      editLinkedLicenceHolderFormValue$ | async;
+      let editLinkedLicenceHolderFormValue
+    "
+    class="govuk-grid-row"
+  >
+    <div class="govuk-grid-column-two-thirds">
+      <h1 id="check" class="govuk-heading-l">Check your edits to the licence holder link before continuing</h1>
+      <div class="govuk-inset-text">
+        You are editing the link between <b>{{ organisation?.name }}</b> and
+        licence holder <b>{{ licenceHolderLink.licenceHolderName }}</b>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <dl class="govuk-summary-list">
+            <div
+              *ngIf="selectEndOfLink$ | async; let selectEndOfLink"
+              class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                When would you like this link to end?
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ selectEndOfLink }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-link"
+                  routerLink="/organisation/{{
+                    organisationId
+                  }}/licence-holders/{{ licenceHolderId }}/edit"
+                >
+                  Change<span class="govuk-visually-hidden">
+                    when would you like this link to end
+                  </span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Would you like to transfer this licence holder to another manufacturer?
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ editLinkedLicenceHolderFormValue.transferLink }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-link"
+                  routerLink="/organisation/{{
+                    organisationId
+                  }}/licence-holders/{{ licenceHolderId }}/edit"
+                >
+                  Change<span class="govuk-visually-hidden">
+                    if you would like to transfer this link to another
+                    manufacturer
+                  </span>
+                </a>
+              </dd>
+            </div>
+            <div
+              *ngIf="editLinkedLicenceHolderFormValue.organisationName"
+              class="govuk-summary-list__row"
+            >
+              <dt class="govuk-summary-list__key">
+                Manufacturer to transfer link to
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ editLinkedLicenceHolderFormValue.organisationName }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-link"
+                  routerLink="/organisation/{{
+                    organisationId
+                  }}/licence-holders/{{ licenceHolderId }}/edit"
+                >
+                  Change<span class="govuk-visually-hidden">
+                    manufacturer to transfer link to</span
+                  >
+                </a>
+              </dd>
+            </div>
+          </dl>
+          <div class="govuk-button-group">
+            <button
+              class="govuk-button"
+              (click)="edit()"
+              [disabled]="loading$ | async"
+            >
+              Edit link
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,95 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l">Amend credit balance</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['addingOrRemoving']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">
+            Are you adding or removing credits?
+          </legend>
+          <p
+            *ngIf="errors['addingOrRemoving']"
+            id="addingOrRemoving-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["addingOrRemoving"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                formControlName="addingOrRemoving"
+                class="govuk-radios__input"
+                id="adding"
+                name="addingOrRemoving"
+                type="radio"
+                value="Adding"
+                data-aria-controls="conditional-yes"
+              />
+              <label class="govuk-label govuk-radios__label" for="adding"
+                >Adding</label
+              >
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="addingOrRemoving"
+                class="govuk-radios__input"
+                id="removing"
+                name="addingOrRemoving"
+                type="radio"
+                value="Removing"
+              />
+              <label class="govuk-label govuk-radios__label" for="removing"
+                >Removing</label
+              >
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['amount']"
+      >
+        <label class="govuk-label" for="amount">Number of credits</label>
+        <div id="amount-hint" class="govuk-hint">
+          Type a number of 0 or above.
+        </div>
+        <p
+          *ngIf="errors['amount']"
+          id="email-error"
+          class="govuk-error-message"
+        >
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["amount"] }}
+        </p>
+        <input
+          formControlName="amount"
+          class="govuk-input govuk-!-width-one-half"
+          id="amount"
+          name="amount"
+          type="text"
+          inputmode="numeric"
+          spellcheck="false"
+        />
+      </div>
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+        <button
+          type="button"
+          class="govuk-button govuk-button--secondary"
+          data-module="govuk-button"
+          routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+            organisationId
+          }}/summary"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

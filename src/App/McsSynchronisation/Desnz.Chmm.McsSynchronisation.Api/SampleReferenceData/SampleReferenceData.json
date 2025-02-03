@@ -1,0 +1,126 @@
+{
+  "AlternativeSystemFuelTypes": [
+    {
+      "ID": 1,
+      "Description": "Anthracite"
+    },
+    {
+      "ID": 2,
+      "Description": "Biogas (Landfill) Community Heating Only"
+    },
+    {
+      "ID": 3,
+      "Description": "Bulkwood Pellets"
+    }
+  ],
+  "RenewableSystemDesigns": [
+    {
+      "ID": 1,
+      "Description": "Space Heat, DHW and another purpose"
+    },
+    {
+      "ID": 2,
+      "Description": "Space Heat and another purpose"
+    },
+    {
+      "ID": 3,
+      "Description": "DHW and another purpose"
+    },
+    {
+      "ID": 4,
+      "Description": "Space heat and DHW"
+    },
+    {
+      "ID": 5,
+      "Description": "Space heat only"
+    },
+    {
+      "ID": 6,
+      "Description": "DHW only"
+    },
+    {
+      "ID": 7,
+      "Description": "Another purpose only"
+    }
+  ],
+  "NewBuildOptions": [
+    {
+      "ID": 1,
+      "Description": "Yes"
+    },
+    {
+      "ID": 2,
+      "Description": "No"
+    }
+  ],
+  "InstallationAges": [
+    {
+      "ID": 1,
+      "Description": "Installed at the same time"
+    },
+    {
+      "ID": 2,
+      "Description": "Up to 3 months"
+    }
+  ],
+  "AirTypeTechnologies": [
+    {
+      "ID": 1,
+      "Description": "Air to Air Source Heat Pump"
+    },
+    {
+      "ID": 2,
+      "Description": "Air to Water Source Heat Pump"
+    }
+  ],
+  "AlternativeSystemTypes": [
+    {
+      "ID": 1,
+      "Description": "Portable electric heaters"
+    },
+    {
+      "ID": 2,
+      "Description": "Not applicable – no other heating source/system/technology"
+    }
+  ],
+  "TechnologyTypes": [
+    {
+      "ID": 1,
+      "Description": "Air source heat pump"
+    },
+    {
+      "ID": 4,
+      "Description": "Ground/Water source Heat Pump"
+    },
+    {
+      "ID": 6,
+      "Description": "Hot Water Heat Pump"
+    },
+    {
+      "ID": 14,
+      "Description": "Exhaust Air Heat Pump"
+    },
+    {
+      "ID": 16,
+      "Description": "Gas Absorbtion Heat Pump"
+    },
+    {
+      "ID": 17,
+      "Description": "Solar Assisted Heat Pump"
+    }
+  ],
+  "Manufacturers": [
+    {
+      "ID": 1,
+      "Description": "1st Sunflower Renewable Energy"
+    },
+    {
+      "ID": 2,
+      "Description": "24 Sun - Solar Systems, Ltd."
+    },
+    {
+      "ID": 3,
+      "Description": "3S Swiss Solar Systems AG"
+    }
+  ]
+}

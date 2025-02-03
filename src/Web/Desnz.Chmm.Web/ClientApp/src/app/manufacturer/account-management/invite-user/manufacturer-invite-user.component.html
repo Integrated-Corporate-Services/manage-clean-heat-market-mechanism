@@ -1,0 +1,103 @@
+<h1 class="govuk-heading-l">Add new user</h1>
+
+<ng-container *ngIf="serverError$ | async; let serverError">
+  <div *ngIf="serverError" class="govuk-error-summary" data-module="govuk-error-summary">
+  <div role="alert">
+    <h2 class="govuk-error-summary__title">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <li>
+          <a routerLink="#name">{{ serverError }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</ng-container>
+
+<form>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['name']">
+        <label class="govuk-label" for="name">Full name</label>
+        <p *ngIf="errors['name']"
+           id="name-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["name"] }}
+        </p>
+        <input [(ngModel)]="command.name"
+               class="govuk-input"
+               id="name"
+               name="name"
+               type="text" />
+      </div>
+
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['email']">
+        <label class="govuk-label" for="email">Email address</label>
+        <p *ngIf="errors['email']"
+           id="email-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["email"] }}
+        </p>
+        <input [(ngModel)]="command.email"
+               class="govuk-input"
+               id="email"
+               name="email"
+               type="text" />
+      </div>
+
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['jobTitle']">
+        <label class="govuk-label" for="jobTitle">Job title</label>
+        <p *ngIf="errors['jobTitle']"
+           id="jobTitle-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["jobTitle"] }}
+        </p>
+        <input [(ngModel)]="command.jobTitle"
+               class="govuk-input"
+               id="jobTitle"
+               name="jobTitle"
+               type="text" />
+      </div>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['telephoneNumber']">
+        <label class="govuk-label" for="telephoneNumber">Telephone number</label>
+        <p *ngIf="errors['telephoneNumber']"
+           id="telephoneNumber-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["telephoneNumber"] }}
+        </p>
+        <input [(ngModel)]="command.telephoneNumber"
+               class="govuk-input"
+               id="telephoneNumber"
+               name="telephoneNumber"
+               type="text" />
+      </div>
+
+      <div class="govuk-button-group">
+        <button class="govuk-button" (click)="continue()">Continue</button>
+        <button class="govuk-button govuk-button--secondary" (click)="cancel()">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+
+</form>

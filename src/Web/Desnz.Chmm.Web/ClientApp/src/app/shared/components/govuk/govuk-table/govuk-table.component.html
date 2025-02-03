@@ -1,0 +1,28 @@
+<table class="govuk-table">
+  <caption
+    *ngIf="state.caption"
+    class="govuk-table__caption govuk-table__caption--m"
+  >
+    {{
+      state.caption
+    }}
+  </caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th
+        *ngFor="let column of state.header"
+        scope="col"
+        class="govuk-table__header"
+      >
+        {{ column.value }}
+      </th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr *ngFor="let row of state.body" class="govuk-table__row">
+      <td *ngFor="let column of row" class="govuk-table__cell">
+        {{ column.value }}
+      </td>
+    </tr>
+  </tbody>
+</table>

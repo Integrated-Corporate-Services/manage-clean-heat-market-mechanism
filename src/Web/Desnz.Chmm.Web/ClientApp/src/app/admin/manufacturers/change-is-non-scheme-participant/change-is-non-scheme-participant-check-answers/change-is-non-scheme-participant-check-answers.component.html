@@ -1,0 +1,45 @@
+<ng-container *ngIf="isSchemePartipant$ | async; let isSchemePartipant">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+        Check your answers
+      </h1>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Is this manufacturer a scheme participant?
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ isSchemePartipant }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-link"
+                  routerLink="/organisation/{{
+                    organisationId
+                  }}/change-manufacturer-type"
+                >
+                  Change<span class="govuk-visually-hidden">
+                    manufacturer type
+                  </span>
+                </a>
+              </dd>
+            </div>
+          </dl>
+          <br />
+          <div class="govuk-button-group">
+            <button
+              class="govuk-button"
+              (click)="onChangeType()"
+              [disabled]="loading$ | async"
+            >
+              Change type
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

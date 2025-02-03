@@ -1,0 +1,12 @@
+<div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">
+    {{ state.title }}
+  </h1>
+  <div class="govuk-panel__body">
+    {{ state.message }}
+    <ng-container *ngIf="state.reference">
+      <br />
+      <strong>{{ state.reference }}</strong>
+    </ng-container>
+  </div>
+</div>

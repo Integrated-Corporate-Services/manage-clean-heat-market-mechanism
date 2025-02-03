@@ -1,0 +1,20 @@
+.service-header {
+  color: #000000;
+  background-color: #ffffff;
+  border-bottom: none;
+}
+
+span.service-header__heading {
+  padding: 0rem;
+  margin: 0.2rem 0rem 0.5rem 0rem;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+a.govuk-link {
+  margin-left: 0.5rem;
+}
+
+.scheme-year-navbar-border {
+  border-bottom: 1px solid #b1b4b6;
+}

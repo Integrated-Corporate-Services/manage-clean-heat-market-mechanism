@@ -1,0 +1,53 @@
+<h1 class="govuk-heading-l">Add note</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div
+    class="govuk-form-group"
+    [class.govuk-form-group--error]="errors['details']"
+  >
+    <label class="govuk-label" for="details">Add details</label>
+    <p *ngIf="errors['details']" id="details-error" class="govuk-error-message">
+      <span class="govuk-visually-hidden">Error:</span>
+      {{ errors["details"] }}
+    </p>
+    <textarea
+      formControlName="details"
+      class="govuk-textarea"
+      rows="5"
+      id="details"
+      name="details"
+    ></textarea>
+  </div>
+  <govuk-file-upload
+    *ngIf="files$ | async; let files"
+    id="files"
+    name="files"
+    label="Upload files"
+    [fileNames]="files.fileNames"
+    [uploadingFiles]="files.uploadingFiles"
+    [retrievingFiles]="files.retrievingFiles"
+    [error]="files.error"
+    (upload)="onFilesChange($event)"
+    (delete)="onDeleteFile($event)"
+  ></govuk-file-upload>
+  <div class="govuk-button-group">
+    <button
+      type="submit"
+      class="govuk-button"
+      data-module="govuk-button"
+      [disabled]="loading$ | async"
+    >
+      Add note
+    </button>
+    <button
+      type="button"
+      class="govuk-button govuk-button--secondary"
+      data-module="govuk-button"
+      routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+        organisationId
+      }}/notes"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

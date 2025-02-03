@@ -1,0 +1,57 @@
+<div *ngIf="creditTransfer$ | async; let creditTransfer" class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Check the details of you credit transfer</h1>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Organisation</dt>
+            <dd class="govuk-summary-list__value">
+              {{ creditTransfer.organisationName }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                href="javascript:void(0)"
+                (click)="onChange()"
+              >
+                Change<span class="govuk-visually-hidden"> organisation</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Number of credits</dt>
+            <dd class="govuk-summary-list__value">
+              {{ creditTransfer.noOfCredits | number : "" : "en-GB" }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                href="javascript:void(0)"
+                (click)="onChange()"
+              >
+                Change<span class="govuk-visually-hidden">
+                  number of credits</span
+                >
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-3">
+          Now complete the transfer
+        </h1>
+        <p class="govuk-body">
+          Once you confirm, credits will be transferred from your account to
+          that of the organisation you selected.
+        </p>
+        <button
+          class="govuk-button"
+          [disabled]="loading$ | async"
+          (click)="onSubmit()"
+        >
+          Confirm and complete transfer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

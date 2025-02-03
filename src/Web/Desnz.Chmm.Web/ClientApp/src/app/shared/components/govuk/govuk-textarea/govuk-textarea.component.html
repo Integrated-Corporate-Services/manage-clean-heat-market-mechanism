@@ -1,0 +1,15 @@
+<div class="govuk-form-group">
+  <label *ngIf="state.label" class="govuk-label" for="{{ state.id }}">
+    {{ state.label }}
+  </label>
+  <div *ngIf="state.hint" id="{{ state.id }}-hint" class="govuk-hint">
+    {{ state.hint }}
+  </div>
+  <textarea
+    class="govuk-textarea"
+    id="{{ state.id }}"
+    name="{{ state.id }}"
+    rows="{{ state.rows }}"
+    [attr.aria-describedby]="state.id + '-hint'"
+  ></textarea>
+</div>

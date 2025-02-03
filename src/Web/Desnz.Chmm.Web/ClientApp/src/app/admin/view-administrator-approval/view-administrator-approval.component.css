@@ -1,0 +1,14 @@
+.govuk-summary-card {
+  border: none;
+  border-left: 7px solid #1d70b8;
+}
+
+.govuk-summary-card__title-wrapper {
+  background-color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0rem;
+}
+
+.govuk-summary-card__title {
+  font-size: 16pt;
+}

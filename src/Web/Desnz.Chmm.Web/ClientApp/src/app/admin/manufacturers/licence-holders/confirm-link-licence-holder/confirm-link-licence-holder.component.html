@@ -1,0 +1,73 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Check the details before linking the licence holder</h1>
+    <h2 class="govuk-heading-m">Link licence holder</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+          <div
+            *ngIf="manufacturer$ | async; let manufacturer"
+            class="govuk-summary-list__row"
+          >
+            <dt class="govuk-summary-list__key">Manufacturer</dt>
+            <dd class="govuk-summary-list__value">
+              {{ manufacturer.name }}
+            </dd>
+          </div>
+          <div
+            *ngIf="licenceHolder$ | async; let licenceHolder"
+            class="govuk-summary-list__row"
+          >
+            <dt class="govuk-summary-list__key">Licence holder</dt>
+            <dd class="govuk-summary-list__value">
+              {{ licenceHolder.name }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/organisation/{{
+                  organisationId
+                }}/licence-holders/link"
+                [queryParams]="{ defaultLicenceHolderId: licenceHolderId }"
+              >
+                Change<span class="govuk-visually-hidden">
+                  licence holder
+                </span>
+              </a>
+            </dd>
+          </div>
+          <div
+            *ngIf="selectStarOfLink$ | async; let selectStarOfLink"
+            class="govuk-summary-list__row"
+          >
+            <dt class="govuk-summary-list__key">Start of link</dt>
+            <dd class="govuk-summary-list__value">
+              {{ selectStarOfLink }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/organisation/{{
+                  organisationId
+                }}/licence-holders/link"
+              >
+                Change<span class="govuk-visually-hidden"> start of link </span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <br />
+        <h3 class="govuk-heading-m">Confirm licence holder link</h3>
+        <p class="govuk-body">
+          By confirming this link, credits associated with this licence holder
+          will be associated with this manufacturer from the date selected.
+        </p>
+        <div class="govuk-button-group">
+          <button class="govuk-button" (click)="link()">
+            Link licence holder
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div *ngIf="editObligation$ | async; let editObligation" class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Check your input before amending the low-carbon heat target</h1>
+    <h2 class="govuk-heading-m">Amend low-carbon heat target</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Adding or removing</dt>
+            <dd class="govuk-summary-list__value">
+              {{ editObligation.obligationAmendment?.addingOrRemoving }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/amend-obligation"
+              >
+                Change<span class="govuk-visually-hidden">
+                  adding or removing</span
+                >
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Low-carbon heat target amendment amount
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ editObligation.obligationAmendment?.amount }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/amend-obligation"
+              >
+                Change<span class="govuk-visually-hidden">
+                  obligation adjustment amount</span
+                >
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <div *ngIf="editObligation.errorMessage" class="govuk-form-group govuk-form-group--error">
+          <p class="govuk-error-message" id="test-error">
+            <span class="govuk-visually-hidden">Error</span>
+            {{editObligation.errorMessage}}
+          </p>
+        </div>
+        <div class="govuk-button-group">
+          <button
+            class="govuk-button"
+            [disabled]="editObligation.loading"
+            (click)="onSubmit()"
+          >
+            Amend
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

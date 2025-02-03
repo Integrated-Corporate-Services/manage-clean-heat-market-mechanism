@@ -1,0 +1,52 @@
+<div class="govuk-grid-row" *ngIf="transferHistory$ | async; let transferHistory">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Credit transfer history</h1>
+    <ng-container *ngIf="transferHistory.transfersIn.length + transferHistory.transfersOut.length === 0">
+      <div class="govuk-inset-text">
+        No credits have been transferred during this scheme year.
+      </div>
+    </ng-container>
+    <div class="govuk-!-margin-1">&nbsp;</div>
+    <div *ngIf="transferHistory.transfersIn.length > 0">
+      <table class="govuk-table transfer-table transfer-table--in">
+        <caption class="govuk-table__caption govuk-table__caption--m">Credits transferred in</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Date and time</th>
+            <th scope="col" class="govuk-table__header">Organisation</th>
+            <th scope="col" class="govuk-table__header">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let transfer of transferHistory.transfersIn">
+            <td class="govuk-table__cell">{{ transfer.transferDateTime | date: 'd MMM yyyy \'at\' h:mm a' }}</td>
+            <td class="govuk-table__cell">{{ transfer.organisationName }}</td>
+            <td class="govuk-table__cell">{{ transfer.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="govuk-!-margin-1">&nbsp;</div>
+    </div>
+    <div *ngIf="transferHistory.transfersOut.length > 0">
+      <table class="govuk-table transfer-table transfer-table--out">
+        <caption class="govuk-table__caption govuk-table__caption--m">Credits transferred out</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Date and time</th>
+            <th scope="col" class="govuk-table__header">Organisation</th>
+            <th scope="col" class="govuk-table__header">User</th>
+            <th scope="col" class="govuk-table__header">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let transfer of transferHistory.transfersOut">
+            <td class="govuk-table__cell">{{ transfer.transferDateTime | date: 'd MMM yyyy \'at\' h:mm a' }}</td>
+            <td class="govuk-table__cell">{{ transfer.organisationName }}</td>
+            <td class="govuk-table__cell">{{ transfer.transferredBy }}</td>
+            <td class="govuk-table__cell">{{ -transfer.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

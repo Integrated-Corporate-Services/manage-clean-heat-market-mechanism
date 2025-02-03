@@ -1,0 +1,236 @@
+<ng-container *ngIf="licenceHolderLink$ | async; let licenceHolderLink">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-l">
+        End the link between {{ licenceHolderLink.licenceHolderName }} and
+        {{ organisation?.name }}
+      </h1>
+    </div>
+  </div>
+  <ng-container *ngIf="manufacturers$ | async; let manufacturers">
+    <ng-container *ngIf="manufacturers.loading; else showData">
+      <p class="govuk-body">Loading manufacturers...</p>
+    </ng-container>
+    <ng-template #showData>
+      <form *ngIf="manufacturers.data" [formGroup]="form">
+        <div
+          class="govuk-form-group"
+          [class.govuk-form-group--error]="
+            errors['endDate'] ||
+            errors['day'] ||
+            errors['month'] ||
+            errors['year']
+          "
+        >
+          <label
+            class="govuk-label govuk-!-font-size-24 govuk-!-font-weight-bold"
+            for="endDate"
+          >
+            What date should this link end?
+          </label>
+          <div id="endDate-hint" class="govuk-hint">For example 27/03/2007</div>
+          <p
+            *ngIf="errors['endDate']"
+            id="endDate-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["endDate"] }}
+          </p>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label
+                class="govuk-label govuk-date-input__label"
+                for="endDate-day"
+              >
+                Day
+              </label>
+              <p
+                *ngIf="errors['day']"
+                id="day-error"
+                class="govuk-error-message"
+              >
+                <span class="govuk-visually-hidden">Error:</span>
+                {{ errors["day"] }}
+              </p>
+              <input
+                class="govuk-input govuk-date-input__input govuk-input--width-2"
+                [class.govuk-input--error]="errors['endDate'] || errors['day']"
+                id="endDate-day"
+                name="endDate-day"
+                type="text"
+                inputmode="numeric"
+                formControlName="day"
+              />
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label
+                class="govuk-label govuk-date-input__label"
+                for="endDate-month"
+              >
+                Month
+              </label>
+              <p
+                *ngIf="errors['month']"
+                id="month-error"
+                class="govuk-error-message"
+              >
+                <span class="govuk-visually-hidden">Error:</span>
+                {{ errors["month"] }}
+              </p>
+              <input
+                class="govuk-input govuk-date-input__input govuk-input--width-2"
+                [class.govuk-input--error]="
+                  errors['endDate'] || errors['month']
+                "
+                id="endDate-month"
+                name="endDate-month"
+                type="text"
+                inputmode="numeric"
+                formControlName="month"
+              />
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label
+                class="govuk-label govuk-date-input__label"
+                for="endDate-year"
+              >
+                Year
+              </label>
+              <p
+                *ngIf="errors['year']"
+                id="year-error"
+                class="govuk-error-message"
+              >
+                <span class="govuk-visually-hidden">Error:</span>
+                {{ errors["year"] }}
+              </p>
+              <input
+                class="govuk-input govuk-date-input__input govuk-input--width-4"
+                [class.govuk-input--error]="errors['endDate'] || errors['year']"
+                id="endDate-year"
+                name="endDate-year"
+                type="text"
+                inputmode="numeric"
+                formControlName="year"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="govuk-form-group"
+          [class.govuk-form-group--error]="errors['transferLink']"
+        >
+          <fieldset class="govuk-fieldset" aria-describedby="transferLink-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h2 class="govuk-fieldset__heading">
+                Would you like to transfer this licence holder to another manufacturer?
+              </h2>
+            </legend>
+            <div id="transferLink-hint" class="govuk-hint">
+              This transfer will start one day after the end date you have
+              entered above.
+            </div>
+            <p
+              *ngIf="errors['transferLink']"
+              id="transferLink-error"
+              class="govuk-error-message"
+            >
+              <span class="govuk-visually-hidden">Error:</span>
+              {{ errors["transferLink"] }}
+            </p>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input
+                  class="govuk-radios__input"
+                  id="yes"
+                  name="transferLink"
+                  type="radio"
+                  value="Yes"
+                  formControlName="transferLink"
+                  data-aria-controls="conditional-yes"
+                  (ngModelChange)="onTransferLink($event)"
+                />
+                <label class="govuk-label govuk-radios__label" for="yes">
+                  Yes
+                </label>
+              </div>
+              <div
+                class="govuk-radios__conditional"
+                id="conditional-yes"
+                [class.govuk-radios__conditional--hidden]="
+                  form.controls.transferLink.value !== 'Yes'
+                "
+              >
+                <div
+                  class="govuk-form-group"
+                  [class.govuk-form-group--error]="errors['organisationId']"
+                >
+                  <label class="govuk-label" for="organisationId">
+                    Select manufacturer
+                  </label>
+                  <p
+                    *ngIf="errors['organisationId']"
+                    id="organisationId-error"
+                    class="govuk-error-message"
+                  >
+                    <span class="govuk-visually-hidden">Error:</span>
+                    {{ errors["organisationId"] }}
+                  </p>
+                  <select
+                    class="govuk-select"
+                    formControlName="organisationId"
+                    id="organisationId"
+                    name="organisationId"
+                    (ngModelChange)="
+                      onSelectOrganisation($event, manufacturers.data)
+                    "
+                  >
+                    <option
+                      *ngFor="let manufacturer of manufacturers.data"
+                      [value]="manufacturer.id"
+                    >
+                      {{ manufacturer.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="govuk-radios__item">
+                <input
+                  class="govuk-radios__input"
+                  id="no"
+                  name="transferLink"
+                  type="radio"
+                  value="No"
+                  formControlName="transferLink"
+                  data-aria-controls="conditional-no"
+                  (ngModelChange)="onTransferLink($event)"
+                />
+                <label class="govuk-label govuk-radios__label" for="no">
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="govuk-button-group">
+          <button class="govuk-button" (click)="link(licenceHolderLink.startDate)" type="submit">
+            Continue
+          </button>
+          <button
+            class="govuk-button govuk-button--secondary"
+            routerLink="../../view"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </ng-container>
+</ng-container>

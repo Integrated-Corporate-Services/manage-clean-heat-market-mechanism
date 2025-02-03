@@ -1,0 +1,160 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 9 of 9</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['hasOptedIn']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+              Would you like to opt-in to be contacted for credit transfers?
+            </h2>
+          </legend>
+          <div id="hasOptedIn-hint" class="govuk-hint">
+            To help facilitate credit transfers between organisations, you and other organisations can opt-in to publish your contact details to a page on the M-CHMM IT system.
+            These details will be visible to other organisations who may contact you to discuss the transfer of credits.
+            You will also be able to see the contact details of other organisations on this page.
+            <br /><br />
+            You can opt-in and opt-out of this at any point.
+          </div>
+          <div class="govuk-!-margin-1">&nbsp;</div>
+          <p
+            *ngIf="errors['hasOptedIn']"
+            id="hasOptedIn-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["hasOptedIn"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                formControlName="hasOptedIn"
+                class="govuk-radios__input"
+                id="yes"
+                name="hasOptedIn"
+                type="radio"
+                value="Yes"
+                data-aria-controls="conditional-yes"
+              />
+              <label class="govuk-label govuk-radios__label" for="yes"
+                >Yes, I will provide contact details for credit transfers</label
+              >
+            </div>
+            <div
+              class="govuk-radios__conditional govuk-radios__conditional--hidden"
+              [class.govuk-radios__conditional--hidden]="
+                form.controls.hasOptedIn.value !== 'Yes'
+              "
+              id="conditional-yes"
+            >
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['name']"
+              >
+                <label class="govuk-label" for="name"
+                  >Contact name or department</label
+                >
+                <p
+                  *ngIf="errors['name']"
+                  id="name-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["name"] }}
+                </p>
+                <input
+                  formControlName="name"
+                  class="govuk-input"
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  spellcheck="false"
+                />
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['emailAddress']"
+              >
+                <label class="govuk-label" for="emailAddress"
+                  >Email address</label
+                >
+                <p
+                  *ngIf="errors['emailAddress']"
+                  id="emailAddress-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["emailAddress"] }}
+                </p>
+                <input
+                  formControlName="emailAddress"
+                  type="email"
+                  class="govuk-input govuk-!-width-two-thirds"
+                  id="emailAddress"
+                  name="emailAddress"
+                  type="emailAddress"
+                  autocomplete="email"
+                  spellcheck="false"
+                />
+              </div>
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="errors['telephoneNumber']"
+              >
+                <label class="govuk-label" for="telephoneNumber"
+                  >Telephone number</label
+                >
+                <div id="telephoneNumber-hint" class="govuk-hint">
+                  For international numbers include the country code
+                </div>
+                <p
+                  *ngIf="errors['telephoneNumber']"
+                  id="telephoneNumber-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["telephoneNumber"] }}
+                </p>
+                <input
+                  formControlName="telephoneNumber"
+                  type="tel"
+                  class="govuk-input govuk-input--width-20"
+                  id="telephoneNumber"
+                  name="telephoneNumber"
+                  type="text"
+                  autocomplete="tel"
+                />
+              </div>
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                formControlName="hasOptedIn"
+                class="govuk-radios__input"
+                id="no"
+                name="hasOptedIn"
+                type="radio"
+                value="No"
+                (ngModelChange)="onNoOptIn()"
+              />
+              <label class="govuk-label govuk-radios__label" for="no"
+                >No, I don't want to opt-in at this time</label
+              >
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        [disabled]="loading$ | async"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

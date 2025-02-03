@@ -1,0 +1,57 @@
+<h1 class="govuk-heading-l">Administrator accounts</h1>
+<p class="govuk-body">
+  This page shows the Administrator users.
+  Here you can add new users, edit existing users, and deactivate users.
+</p>
+<a
+  routerLink="/admin/users/invite"
+  role="button"
+  class="govuk-button"
+  (click)="onInvite()"
+>
+  Add user
+</a>
+
+<ng-container *ngIf="admins$ | async; let admins">
+  <ng-container *ngIf="admins.loading; else table">
+    <p class="govuk-body">Loading Administrator accounts...</p>
+  </ng-container>
+  <ng-template #table>
+    <ng-container *ngIf="admins.data">
+      <table class="govuk-table" *ngIf="admins.data.length > 0">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          Administrator accounts
+        </caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Full name</th>
+            <th scope="col" class="govuk-table__header">Email address</th>
+            <!--<th scope="col" class="govuk-table__header">Permission level</th>-->
+            <th scope="col" class="govuk-table__header">Status</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let admin of admins.data">
+            <td class="govuk-table__cell">
+              <a
+                class="govuk-link"
+                routerLink="/admin/users/edit/{{ admin.id }}"
+                [queryParams]="{ fetchData: true }"
+                >{{ admin.name }}</a
+              >
+            </td>
+            <td class="govuk-table__cell">{{ admin.email }}</td>
+            <!--
+            <td class="govuk-table__cell">
+              {{ admin.chmmRoles[0].name }}
+            </td>
+              -->
+            <td class="govuk-table__cell">
+              <admin-list-status [status]="admin.status"></admin-list-status>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </ng-template>
+</ng-container>

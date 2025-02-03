@@ -1,0 +1,45 @@
+<h1 class="govuk-heading-l">Notes</h1>
+
+<ng-container *ngIf="notes$ | async; let notes">
+  <ng-container *ngIf="noteFiles$ | async; let noteFiles">
+    <ng-container *ngIf="admins$ | async; let admins">
+      <ng-container *ngIf="notes.loading; else table">
+        <p class="govuk-body">Loading notes...</p>
+      </ng-container>
+      <ng-template #table>
+        <a class="govuk-button" routerLink="../add">Add note</a>
+        <ng-container *ngIf="notes.data">
+          <div class="moj-timeline" *ngIf="notes.data.length > 0; else noNotes">
+            <div class="moj-timeline__item" *ngFor="let note of notes.data">
+              <div class="moj-timeline__header">
+                <h2 class="moj-timeline__title">Note added</h2>
+                <ng-container *ngFor="let admin of admins.data">
+                  <p *ngIf="admin.id === note.createdBy" class="moj-timeline__byline"> by {{ admin.name }}</p>
+                </ng-container>
+              </div>
+              <p class="moj-timeline__date">
+                <time dateTime="{{ note.creationDate }}">{{ note.creationDate | date: 'd MMM yyyy \'at\' h:mm a' }}</time>
+              </p>
+              <div class="moj-timeline__description">
+                <p>{{ note.details }}</p>
+                <ul class="moj-timeline__documents" *ngIf="noteFiles[note.id] && noteFiles[note.id].length > 0">
+                  <li class="moj-timeline__document-item" *ngFor="let file of noteFiles[note.id]">
+                    <a download="{{ file }}" class="govuk-link" href="/api/notes/manufacturer/{{ note.organisationId }}/year/{{ note.schemeYearId }}/note/{{ note.id }}/download?fileName={{ file }}">
+                      <svg class="moj-timeline__document-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" width="20" height="16">
+                        <path d="M9 7V1.5L14.5 7H9zM2 0C.9 0 0 .9 0 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6l-6-6H2z" />
+                      </svg>
+                      {{ file }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <ng-template #noNotes>
+            <p class="govuk-body">There are currently no notes to display for this manufacturer.</p>
+          </ng-template>
+        </ng-container>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</ng-container>

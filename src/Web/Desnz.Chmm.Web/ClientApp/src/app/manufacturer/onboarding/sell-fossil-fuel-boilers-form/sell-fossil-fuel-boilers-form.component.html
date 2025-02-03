@@ -1,0 +1,80 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-font-weight-regular">Question 5 of 9</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['isFossilFuelBoilerSeller']"
+      >
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+              Do you sell relevant fossil fuel boilers?
+            </h2>
+          </legend>
+          <div class="govuk-hint">
+            Fossil fuel boilers fired by natural gas, liquefied petroleum gas
+            (LPG), or oil, with a capacity of no more than 70<abbr
+              title="kilowatt hours thermal"
+              ><sup>kWth</sup></abbr
+            >, sold on the UK market are considered relevant boiler sales under
+            the Clean Heat Market Mechanism. See the Scheme Guidance for more
+            information about which fossil fuel boilers are relevant.
+          </div>
+          <p
+            *ngIf="errors['isFossilFuelBoilerSeller']"
+            id="isFossilFuelBoilerSeller-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["isFossilFuelBoilerSeller"] }}
+          </p>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input
+                    formControlName="isFossilFuelBoilerSeller"
+                    class="govuk-radios__input"
+                    id="yes"
+                    name="isFossilFuelBoilerSeller"
+                    type="radio"
+                    value="Yes"
+                  />
+                  <label class="govuk-label govuk-radios__label" for="yes"
+                    >Yes</label
+                  >
+                </div>
+                <div class="govuk-radios__item">
+                  <input
+                    formControlName="isFossilFuelBoilerSeller"
+                    class="govuk-radios__input"
+                    id="no"
+                    name="isFossilFuelBoilerSeller"
+                    type="radio"
+                    value="No"
+                  />
+                  <label class="govuk-label govuk-radios__label" for="no"
+                    >No</label
+                  >
+                </div>
+                <div
+                  class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                  id="conditional-no"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        [disabled]="loading$ | async"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

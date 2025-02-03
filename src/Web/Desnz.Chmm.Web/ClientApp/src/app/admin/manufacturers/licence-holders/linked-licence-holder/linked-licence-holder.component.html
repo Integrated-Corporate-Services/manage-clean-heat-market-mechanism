@@ -1,0 +1,29 @@
+<div *ngIf="licenceHolder$ | async; let licenceHolder" class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Licence holder linked</h1>
+      <div class="govuk-panel__body">
+        {{ licenceHolder.name }} has been successfully linked
+      </div>
+    </div>
+    <br />
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      This licence holder has now been linked to this manufacturer. All credits
+      associated with the licence holder will be associated with this
+      manufacturer from the date specified. You can see this in the credit
+      balance calculation on the summary page.
+    </p>
+    <h2 class="govuk-heading-m">What would you like to do next?</h2>
+    <ul class="govuk-list">
+      <li>
+        <a
+          class="govuk-link"
+          routerLink="/organisation/{{ organisationId }}/licence-holders"
+        >
+          Back to licence holders
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

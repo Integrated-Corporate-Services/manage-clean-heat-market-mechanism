@@ -1,0 +1,44 @@
+<div
+  *ngIf="isSchemePartipant$ | async; let isSchemePartipant"
+  class="govuk-grid-row"
+>
+  <div class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Manufacturer type changed</h1>
+      <div class="govuk-panel__body">
+        {{ organisation?.name }} changed to
+        {{
+          isSchemePartipant === "Yes"
+            ? "Scheme Participant"
+            : "Non-Scheme Participant"
+        }}
+      </div>
+    </div>
+    <br />
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      {{
+        isSchemePartipant === "Yes"
+          ? "This manufacturer has been changed to a Scheme Participant which means they will now be able to receive credits transferred from other manufacturers."
+          : "This manufacturer has been changed to a Non-Scheme Participant which means they will no longer be able to receive credits transferred from other manufacturers."
+      }}
+    </p>
+    <h2 class="govuk-heading-m">What would you like to do next?</h2>
+    <ul class="govuk-list">
+      <li>
+        <a
+          class="govuk-link"
+          routerLink="../../edit/check-answers"
+          [queryParams]="{ fetchData: true, mode: 'edit' }"
+        >
+          Back to organisation details
+        </a>
+      </li>
+      <li>
+        <a class="govuk-link" routerLink="/admin/organisations">
+          View all manufacturers
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

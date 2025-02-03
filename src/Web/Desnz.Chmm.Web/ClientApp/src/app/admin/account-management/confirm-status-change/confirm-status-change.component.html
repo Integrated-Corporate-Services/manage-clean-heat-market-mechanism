@@ -1,0 +1,23 @@
+<ng-container *ngIf="(user$ | async)?.data; let user">
+  <h2 class="govuk-heading-l">Are you sure?</h2>
+  <p class="govuk-body">
+    You are about to
+    {{ user.status === "Active" ? "deactivate" : "activate" }} this user. This
+    will {{ user.status === "Active" ? "remove their" : "grant them" }} access
+    to the M-CHMM IT system.
+  </p>
+  <div class="govuk-button-group">
+    <button
+      class="govuk-button {{ user.status === 'Active' ? 'govuk-button--warning' : '' }}"
+      (click)="onStatusChange(user.status)"
+    >
+      Yes, {{ user.status === "Active" ? "deactivate" : "activate" }} this user
+    </button>
+    <button
+      class="govuk-button govuk-button--secondary"
+      routerLink="/admin/users/edit/{{ user.id }}"
+    >
+      No, return to user
+    </button>
+  </div>
+</ng-container>

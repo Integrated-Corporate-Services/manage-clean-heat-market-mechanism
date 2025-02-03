@@ -1,0 +1,96 @@
+<h1 class="govuk-heading-l">Manufacturer accounts</h1>
+
+<ng-container *ngIf="manufacturers$ | async; let manufacturers">
+  <ng-container *ngIf="manufacturers.loading; else table">
+    <p class="govuk-body">Loading manufacturers...</p>
+  </ng-container>
+  <ng-template #table>
+    <ng-container *ngIf="manufacturers.data">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="search"> Search </label>
+            <input
+              class="govuk-input"
+              id="search"
+              name="search"
+              type="text"
+              [(ngModel)]="search"
+            />
+          </div>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-form-group show-retired">
+            <fieldset class="govuk-fieldset">
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                  <input
+                    class="govuk-checkboxes__input"
+                    id="showArchived"
+                    name="showArchived"
+                    type="checkbox"
+                    value="showArchived"
+                    [(ngModel)]="showArchived"
+                  />
+                  <label
+                    class="govuk-label govuk-checkboxes__label"
+                    for="showArchived"
+                  >
+                    Show archived
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-grid-row" *ngIf="manufacturers.data.length > 0">
+        <div class="govuk-grid-column-full">
+          <div
+            class="manufacturer-card"
+            *ngFor="
+              let manufacturer of manufacturers.data
+                | manufacturersListFilter : search : showArchived
+            "
+          >
+            <div class="manufacturer-card__name">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year"
+                [queryParams]="{
+                  organisationId: manufacturer.id
+                }"
+                >{{ manufacturer.name }}</a
+              >
+            </div>
+            <div class="manufacturer-card__status">
+              <manufacturers-list-status
+                [status]="manufacturer.status"
+              ></manufacturers-list-status>
+              <ng-container *ngIf="manufacturer.status !== 'Archived'">
+                <br />
+                <strong
+                  *ngIf="manufacturer.isNonSchemeParticipant"
+                  class="govuk-tag govuk-tag--grey scheme-participant"
+                  >non-scheme participant</strong
+                >
+                <strong
+                  *ngIf="!manufacturer.isNonSchemeParticipant"
+                  class="govuk-tag govuk-tag--blue scheme-participant"
+                  >scheme participant</strong
+                >
+              </ng-container>
+            </div>
+            <div class="manufacturer-card__licence-holders">
+              <ul class="govuk-list" *ngIf="!!manufacturer.licenceHolders">
+                <li *ngFor="let licenceHolder of manufacturer.licenceHolders">
+                  {{ licenceHolder.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</ng-container>

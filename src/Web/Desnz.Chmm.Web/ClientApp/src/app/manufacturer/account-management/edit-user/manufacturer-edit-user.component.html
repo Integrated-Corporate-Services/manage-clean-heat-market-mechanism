@@ -1,0 +1,85 @@
+<h1 class="govuk-heading-l">Edit user</h1>
+
+<div *ngIf="user" class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Email
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ user.email }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+ 
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['name']">
+        <label class="govuk-label" for="name">Full name</label>
+        <p *ngIf="errors['name']"
+           id="name-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["name"] }}
+        </p>
+        <input formControlName="name"
+               class="govuk-input"
+               id="name"
+               name="name"
+               type="text" />
+      </div>
+      
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['jobTitle']">
+        <label class="govuk-label" for="jobTitle">Job title</label>
+        <p *ngIf="errors['jobTitle']"
+           id="jobTitle-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["jobTitle"] }}
+        </p>
+        <input formControlName="jobTitle"
+               class="govuk-input"
+               id="jobTitle"
+               name="jobTitle"
+               type="text" />
+      </div>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+
+      <div class="govuk-form-group"
+           [class.govuk-form-group--error]="errors['telephoneNumber']">
+        <label class="govuk-label" for="telephoneNumber">Telephone number</label>
+        <p *ngIf="errors['telephoneNumber']"
+           id="telephoneNumber-error"
+           class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["telephoneNumber"] }}
+        </p>
+        <input formControlName="telephoneNumber"
+               class="govuk-input"
+               id="telephoneNumber"
+               name="telephoneNumber"
+               type="text" />
+      </div>
+
+    </div>
+  </div>
+
+  <div class="govuk-button-group">
+    <button class="govuk-button">Continue</button>
+    <button class="govuk-button govuk-button--secondary" (click)="cancel()">Cancel</button>
+  </div>
+
+</form>

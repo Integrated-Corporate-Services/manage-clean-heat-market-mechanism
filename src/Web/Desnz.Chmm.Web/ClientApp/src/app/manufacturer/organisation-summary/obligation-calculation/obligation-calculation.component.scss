@@ -1,0 +1,28 @@
+.total {
+  background-color: #1d70b8;
+  margin: 0;
+}
+
+.total .govuk-heading-m {
+  color: #ffffff;
+  margin: 0;
+  padding: 15px 5px 15px 5px;
+}
+
+.total .total-value {
+  text-align: right;
+}
+
+.right-align {
+  text-align: right;
+}
+
+caption.govuk-table__caption {
+  display: inline;
+}
+
+button.caption-button {
+  font-size: 1.15rem;
+  padding: 0.2em 0.35em;
+  margin-bottom: 5px;
+}

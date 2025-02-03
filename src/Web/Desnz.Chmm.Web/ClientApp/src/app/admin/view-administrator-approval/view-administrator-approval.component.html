@@ -1,0 +1,58 @@
+<ng-container *ngIf="administratorApproval$ | async; let administratorApproval">
+  <ng-container *ngIf="administratorApproval.loading; else show">
+    <p class="govuk-body">Loading Administrator attachments and comments...</p>
+  </ng-container>
+  <ng-template #show>
+    <div *ngIf="administratorApproval.data" class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">Administrator approval notes</h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Attachments</dt>
+            <dd class="govuk-summary-list__value">
+              <ul
+                *ngIf="
+                  administratorApproval.data.fileNames.length > 0;
+                  else noFiles
+                "
+                class="govuk-list"
+              >
+                <li
+                  *ngFor="let fileName of administratorApproval.data?.fileNames"
+                >
+                  <a
+                    download="{{ fileName }}"
+                    class="govuk-link"
+                    href="/api/identity/organisations/{{
+                      organisationId
+                    }}/approval-comments/download?fileName={{ fileName }}"
+                  >
+                    {{ fileName }}
+                  </a>
+                </li>
+              </ul>
+              <ng-template #noFiles
+                ><p class="govuk-body">No files added</p></ng-template
+              >
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Additional comments</dt>
+            <dd class="govuk-summary-list__value">
+              <span
+                *ngIf="administratorApproval.data.comments; else noComments"
+              >
+                {{ administratorApproval.data.comments }}
+              </span>
+              <ng-template #noComments
+                ><p class="govuk-body">No comments added</p></ng-template
+              >
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

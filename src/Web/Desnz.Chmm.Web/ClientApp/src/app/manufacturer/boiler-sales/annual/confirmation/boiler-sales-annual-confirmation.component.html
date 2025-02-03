@@ -1,0 +1,55 @@
+<div *ngIf="boilerSales$ | async; let boilerSales" class="govuk-grid-row">
+  <div *ngIf="!boilerSales.isEditing" class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Boiler sales submitted</h1>
+      <div class="govuk-panel__body">
+        {{ year }} annual boiler sales submitted
+      </div>
+    </div>
+    <div class="govuk-!-margin-2">&nbsp;</div>
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      The Administrator can now see your annual sales data, verifier's assurance report and supporting evidence.
+      They will contact you if they have any questions.
+      Once they have approved this, it will be used to calculate your final low-carbon heat target.
+    </p>
+  </div>
+  <div *ngIf="boilerSales.isEditing" class="govuk-grid-column-full">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Annual boiler sales edited</h1>
+      <div class="govuk-panel__body">
+        {{ organisation?.name }} {{ year }} annual boiler sales
+      </div>
+    </div>
+    <div class="govuk-!-margin-2">&nbsp;</div>
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      The annual boiler sales have been edited.
+      You can see this on the boiler sales page and the summary page.
+      The change is visible to both you and the manufacturer.
+      They will be able to see the new figures and/or uploaded documents.
+      The low carbon heat target has been re-calculated with the new figures.
+    </p>
+    <h2 class="govuk-heading-m">What would you like to do next?</h2>
+    <ul class="govuk-list">
+      <li>
+        <a
+          class="govuk-link"
+          routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+            organisation?.id
+          }}/boiler-sales"
+          >Back to boiler sales</a
+        >
+      </li>
+      <li>
+        <a
+          class="govuk-link"
+          routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+            organisation?.id
+          }}/summary"
+          >Go to summary</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>

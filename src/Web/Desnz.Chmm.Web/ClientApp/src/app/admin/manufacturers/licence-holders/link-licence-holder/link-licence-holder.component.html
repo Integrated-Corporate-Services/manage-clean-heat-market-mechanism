@@ -1,0 +1,255 @@
+<ng-container
+  *ngIf="unlinkedLicenceHolders$ | async; let unlinkedLicenceHolders"
+>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Link licence holder</h1>
+      <p class="govuk-body">
+        Use this page to link a licence holder to this manufacturer.
+        You will only be able to select licence holders which have not already been linked.
+      </p>
+    </div>
+  </div>
+  <ng-container *ngIf="unlinkedLicenceHolders.loading; else showData">
+    <p class="govuk-body">Loading licence holders...</p>
+  </ng-container>
+  <ng-template #showData>
+    <form
+      [formGroup]="form"
+      *ngIf="
+        unlinkedLicenceHolders.data && unlinkedLicenceHolders.data.length > 0;
+        else noData
+      "
+    >
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['selectedLicenceHolderId']"
+      >
+        <label
+          class="govuk-label govuk-!-font-size-24 govuk-!-font-weight-bold"
+          for="selectedLicenceHolderId"
+        >
+          Licence holder
+        </label>
+        <p
+          *ngIf="errors['selectedLicenceHolderId']"
+          id="selectedLicenceHolderId-error"
+          class="govuk-error-message"
+        >
+          <span class="govuk-visually-hidden">Error:</span>
+          {{ errors["selectedLicenceHolderId"] }}
+        </p>
+        <select
+          class="govuk-select"
+          formControlName="selectedLicenceHolderId"
+          id="selectedLicenceHolderId"
+          name="selectedLicenceHolderId"
+        >
+          <option
+            *ngFor="let unlinkedLicenceHolder of unlinkedLicenceHolders.data"
+            [value]="unlinkedLicenceHolder.id"
+          >
+            {{ unlinkedLicenceHolder.name }}
+          </option>
+        </select>
+      </div>
+
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="errors['linkStart']"
+      >
+        <fieldset class="govuk-fieldset" aria-describedby="linkStart-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">When does this link start?</h2>
+          </legend>
+          <p
+            *ngIf="errors['linkStart']"
+            id="linkStart-error"
+            class="govuk-error-message"
+          >
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ errors["linkStart"] }}
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input
+                class="govuk-radios__input"
+                id="startOfScheme"
+                name="linkStart"
+                type="radio"
+                value="startOfScheme"
+                formControlName="linkStart"
+                data-aria-controls="conditional-startOfScheme"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="startOfScheme"
+              >
+                Start of the scheme
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input
+                class="govuk-radios__input"
+                id="specificDate"
+                name="linkStart"
+                type="radio"
+                value="specificDate"
+                formControlName="linkStart"
+                data-aria-controls="conditional-specificDate"
+              />
+              <label class="govuk-label govuk-radios__label" for="specificDate">
+                Specific date
+              </label>
+            </div>
+            <div
+              class="govuk-radios__conditional"
+              id="conditional-specificDate"
+              [class.govuk-radios__conditional--hidden]="
+                form.controls.linkStart.value !== 'specificDate'
+              "
+            >
+              <div
+                class="govuk-form-group"
+                [class.govuk-form-group--error]="
+                  errors['startDate'] ||
+                  errors['day'] ||
+                  errors['month'] ||
+                  errors['year']
+                "
+              >
+                <label class="govuk-label" for="startDate">
+                  What date should this link start?
+                </label>
+                <div id="startDate-hint" class="govuk-hint">
+                  For example 27/03/2007
+                </div>
+                <p
+                  *ngIf="errors['startDate']"
+                  id="startDate-error"
+                  class="govuk-error-message"
+                >
+                  <span class="govuk-visually-hidden">Error:</span>
+                  {{ errors["startDate"] }}
+                </p>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label
+                      class="govuk-label govuk-date-input__label"
+                      for="startDate-day"
+                    >
+                      Day
+                    </label>
+                    <p
+                      *ngIf="errors['day']"
+                      id="day-error"
+                      class="govuk-error-message"
+                    >
+                      <span class="govuk-visually-hidden">Error:</span>
+                      {{ errors["day"] }}
+                    </p>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-2"
+                      [class.govuk-input--error]="
+                        errors['startDate'] || errors['day']
+                      "
+                      id="startDate-day"
+                      name="startDate-day"
+                      type="text"
+                      inputmode="numeric"
+                      formControlName="day"
+                    />
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label
+                      class="govuk-label govuk-date-input__label"
+                      for="startDate-month"
+                    >
+                      Month
+                    </label>
+                    <p
+                      *ngIf="errors['month']"
+                      id="month-error"
+                      class="govuk-error-message"
+                    >
+                      <span class="govuk-visually-hidden">Error:</span>
+                      {{ errors["month"] }}
+                    </p>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-2"
+                      [class.govuk-input--error]="
+                        errors['startDate'] || errors['month']
+                      "
+                      id="startDate-month"
+                      name="startDate-month"
+                      type="text"
+                      inputmode="numeric"
+                      formControlName="month"
+                    />
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label
+                      class="govuk-label govuk-date-input__label"
+                      for="startDate-year"
+                    >
+                      Year
+                    </label>
+                    <p
+                      *ngIf="errors['year']"
+                      id="year-error"
+                      class="govuk-error-message"
+                    >
+                      <span class="govuk-visually-hidden">Error:</span>
+                      {{ errors["year"] }}
+                    </p>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-4"
+                      [class.govuk-input--error]="
+                        errors['startDate'] || errors['year']
+                      "
+                      id="startDate-year"
+                      name="startDate-year"
+                      type="text"
+                      inputmode="numeric"
+                      formControlName="year"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-button-group">
+        <button class="govuk-button" (click)="link()" type="submit">
+          Link
+        </button>
+        <button
+          class="govuk-button govuk-button--secondary"
+          routerLink="../view"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+    <ng-template #noData>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          There are currently no unlinked licence holders
+        </strong>
+      </div>
+      <div class="govuk-button-group">
+        <a class="govuk-button govuk-button--secondary" routerLink="../view">
+          Cancel
+        </a>
+      </div>
+    </ng-template>
+  </ng-template>
+</ng-container>

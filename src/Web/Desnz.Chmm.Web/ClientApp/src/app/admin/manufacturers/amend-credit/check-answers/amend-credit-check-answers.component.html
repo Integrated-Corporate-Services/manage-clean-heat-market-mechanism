@@ -1,0 +1,59 @@
+<div *ngIf="editCredit$ | async; let editCredit" class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Check your answers</h1>
+    <h2 class="govuk-heading-m">Amend credit balance</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Are you adding or removing credits?
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ editCredit.creditAmendment?.addingOrRemoving }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/amend-credits"
+              >
+                Change<span class="govuk-visually-hidden">
+                  adding or removing
+                </span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Number of credits</dt>
+            <dd class="govuk-summary-list__value">
+              {{ editCredit.creditAmendment?.amount }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a
+                class="govuk-link"
+                routerLink="/scheme-year/{{ schemeYearId }}/organisation/{{
+                  organisationId
+                }}/amend-credits"
+              >
+                Change<span class="govuk-visually-hidden">
+                  credit adjustment amount
+                </span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <div class="govuk-button-group">
+          <button
+            class="govuk-button"
+            [disabled]="editCredit.loading"
+            (click)="onSubmit()"
+          >
+            Amend credit balance
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

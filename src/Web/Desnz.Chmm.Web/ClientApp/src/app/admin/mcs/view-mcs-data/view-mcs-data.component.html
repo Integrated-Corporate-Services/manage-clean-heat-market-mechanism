@@ -1,0 +1,91 @@
+<div *ngIf="mcsState$ | async; let mcsState" class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Heat pump data</h1>
+
+    <ng-container *ngIf="schemeYears$ | async; let schemeYears">
+      <form
+        [formGroup]="form"
+        *ngIf="schemeYears.data">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="selectedSchemeYearIdId">
+            Select scheme year
+          </label>
+      <select
+          class="govuk-select"
+          formControlName="selectedSchemeYearIdId"
+          id="selectedSchemeYearIdId"
+          name="Selected scheme year"
+          *ngIf="schemeYears.data"
+        >
+          <option
+            *ngFor="let schemeYear of schemeYears.data"
+            [value]="schemeYear.id"
+          >
+            {{ schemeYear.name }}
+          </option>
+        </select>
+        &nbsp;
+        <button
+          type="submit"
+          class="govuk-button"
+          data-module="govuk-button"
+          [disabled]="schemeYears.loading"
+          (click)="loadTable()"
+        >
+          Go
+        </button>
+        </div>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="paginatedData$ | async; let paginatedData">
+      <ng-container *ngIf="mcsState.loading">
+        <p class="govuk-body">Loading data downloads...</p>
+      </ng-container>
+
+      <ng-template #noContacts>
+        <div class="govuk-inset-text" *ngIf="!mcsState.loading">
+          There is currently nothing available to download.
+        </div>
+      </ng-template>
+
+      <ng-container *ngIf="!(mcsState.loading) && mcsState.installationRequestSummaries && mcsState.installationRequestSummaries.length > 0; else noContacts">
+        <!-- If mcsState has finished loading and there's data, display the table -->
+        <table class="govuk-table" *ngIf="paginatedData.length > 0">
+          <caption class="govuk-table__caption govuk-table__caption--m">
+            Data downloads
+          </caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Start date</th>
+              <th scope="col" class="govuk-table__header">End date</th>
+              <th scope="col" class="govuk-table__header">Download link</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row" *ngFor="let installationRequest of paginatedData">
+              <td class="govuk-table__cell">
+                {{ installationRequest.startDate }}
+              </td>
+              <td class="govuk-table__cell">
+                {{ installationRequest.endDate }}</td>
+              <td class="govuk-table__cell">
+                <a
+                class="govuk-link"
+                download="{{ installationRequest.startDate }}"
+                href="/api/mcssynchronisation/data/requests/{{
+                  installationRequest.id
+                }}/download"
+              >
+                Download
+              </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+    </ng-container>
+
+    <govuk-pagination (onPageChange)="onPageChange($event)" [options]="{ pageSize: 10, data: mcsState.installationRequestSummaries }"></govuk-pagination>
+  </div>
+</div>

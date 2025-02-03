@@ -1,0 +1,19 @@
+<div class="govuk-grid-row" *ngIf="editManufacturerUser$ | async as editUser">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">User edited</h1>
+        <div class="govuk-panel__body">
+          Edited {{editUser.name}}      
+        </div>
+      </div>
+      <div class="govuk-!-margin-2">&nbsp;</div>
+      <h2 class="govuk-heading-m">What happens now?</h2>
+      <p class="govuk-body">
+        The user account has now been edited.
+      </p>
+      <h2 class="govuk-heading-m">What would you like to do next?</h2>
+      <p class="govuk-body">
+        <a routerLink="/organisation/{{editUser.organisationId}}/users">Back to users</a>
+      </p>
+    </div>
+  </div>

@@ -1,0 +1,14 @@
+<div class="govuk-form-group">
+  <label *ngIf="state.label" class="govuk-label" for="{{ state.id }}">
+    {{ state.label }}
+  </label>
+  <div *ngIf="state.hint" id="{{ state.id }}-hint" class="govuk-hint">
+    {{ state.hint }}
+  </div>
+  <select class="govuk-select" id="{{ state.id }}" name="{{ state.id }}">
+    <option></option>
+    <option *ngFor="let option of state.options" value="{{ option.value }}">
+      {{ option.display }}
+    </option>
+  </select>
+</div>

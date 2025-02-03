@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Check the scheme parameters before completing the change
+    </h1>
+    <div class="govuk-grid-row" *ngIf="command$ | async; let command">
+      <div class="govuk-grid-column-full" *ngIf="command">
+        <div class="govuk-summary-card">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title govuk-heading-m">
+              Scheme parameters
+            </h2>
+            <ul class="govuk-summary-card__actions">
+              <li class="govuk-summary-card__action">
+                <a class="govuk-link" routerLink="../edit" [queryParams]="{ returning: 'true' }">
+                  Change<span class="govuk-visually-hidden"> scheme parameters</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="govuk-summary-card__content">
+            <scheme-configuration-view-display-properties [values]="command"></scheme-configuration-view-display-properties>
+          </div>
+        </div>
+        <div class="govuk-button-group">
+          <button class="govuk-button" (click)="save()">Amend policy parameters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
